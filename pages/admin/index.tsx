@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -16,6 +15,7 @@ interface Product {
 }
 
 const AdminDashboard = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([
     {
       id: '1',
@@ -38,7 +38,7 @@ const AdminDashboard = () => {
       clicks: 89
     }
   ]);
-  
+
   const [newProduct, setNewProduct] = useState({
     name: '',
     category: 'tops',
@@ -106,7 +106,7 @@ const AdminDashboard = () => {
               onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
               className={styles.input}
             />
-            
+
             <select
               value={newProduct.category}
               onChange={(e) => setNewProduct({...newProduct, category: e.target.value})}

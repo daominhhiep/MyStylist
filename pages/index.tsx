@@ -1,9 +1,16 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   const outfits = [
     { id: 1, name: 'Oversized Hoodie Set', style: 'Streetwear', tags: ['hot'], affiliateLink: 'https://shope.ee/streetwear1' },
     { id: 2, name: 'Urban Denim Look', style: 'Streetwear', tags: ['trending'], affiliateLink: 'https://tiktok.com/shop/urban1' },
@@ -30,18 +37,20 @@ const Home: NextPage = () => {
       <header className={styles.header}>
         <div className={styles.headerTop}>
           <h1 className={styles.logo}>👗 OutfitAI</h1>
-          <nav className={styles.nav}>
-            <Link href="/" className={styles.navButton}>
+          <nav className={`${styles.nav} ${mobileMenuOpen ? styles.mobileMenuOpen : ''}`}>
+            <Link href="/" className={styles.navButton} onClick={() => setMobileMenuOpen(false)}>
               Trang chủ
             </Link>
-            <Link href="/try-on" className={styles.navButton}>
+            <Link href="/try-on" className={styles.navButton} onClick={() => setMobileMenuOpen(false)}>
               Gợi ý AI
             </Link>
-            <Link href="/admin" className={styles.navButton}>
+            <Link href="/admin" className={styles.navButton} onClick={() => setMobileMenuOpen(false)}>
               Thử đồ
             </Link>
           </nav>
-          <button className={styles.hamburger}>☰</button>
+          <button className={styles.hamburger} onClick={toggleMobileMenu}>
+            {mobileMenuOpen ? '✕' : '☰'}
+          </button>
         </div>
       </header>
 
