@@ -9,12 +9,12 @@ const Home: NextPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const categories = [
-    { id: 'streetwear', name: 'Streetwear', icon: '🔥', color: 'bg-orange-500' },
-    { id: 'basic', name: 'Basic', icon: '👕', color: 'bg-blue-500' },
-    { id: 'vintage', name: 'Vintage', icon: '📻', color: 'bg-amber-600' },
-    { id: 'clean', name: 'Clean', icon: '✨', color: 'bg-gray-100' },
-    { id: 'formal', name: 'Formal', icon: '👔', color: 'bg-gray-800' },
-    { id: 'sporty', name: 'Sporty', icon: '🏃', color: 'bg-green-500' }
+    { id: 'streetwear', name: 'Streetwear', icon: '🔥', bgGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+    { id: 'basic', name: 'Basic', icon: '👕', bgGradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' },
+    { id: 'vintage', name: 'Vintage', icon: '📻', bgGradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' },
+    { id: 'clean', name: 'Clean', icon: '✨', bgGradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+    { id: 'formal', name: 'Formal', icon: '👔', bgGradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)' },
+    { id: 'sporty', name: 'Sporty', icon: '🏃', bgGradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)' }
   ];
 
   const outfits = {
@@ -88,8 +88,12 @@ const Home: NextPage = () => {
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
                     className={styles.categoryCard}
+                    style={{ background: category.bgGradient }}
                   >
-                    <span className={styles.categoryName}>{category.name}</span>
+                    <div>
+                      <span className={styles.categoryIcon}>{category.icon}</span>
+                      <div className={styles.categoryName}>{category.name}</div>
+                    </div>
                   </button>
                 ))}
               </div>
