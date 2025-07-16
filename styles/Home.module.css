@@ -1,311 +1,392 @@
 
-/* Mobile-first responsive design */
+/* Minimal Monochrome Lookbook Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
 .container {
   min-height: 100vh;
-  padding: 0 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #FFFFFF;
+  color: #111111;
+  font-family: 'Inter', sans-serif;
 }
 
 .header {
-  text-align: center;
-  padding: 2rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: #FFFFFF;
+  border-bottom: 1px solid #EEEEEE;
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
 }
 
 .headerTop {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+  color: #111111;
+  letter-spacing: 0.05em;
 }
 
 .nav {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
+  align-items: center;
 }
 
 .navButton {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: #111111;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
-  font-size: 0.9rem;
+  padding: 0.5rem 0;
+  position: relative;
 }
 
 .navButton:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-1px);
+  color: #666666;
 }
 
-.logo {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin: 0;
-  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.navButton:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #111111;
+  animation: underline 0.3s ease;
+}
+
+@keyframes underline {
+  from { width: 0; }
+  to { width: 100%; }
 }
 
 .tagline {
-  font-size: 1rem;
-  margin: 0.5rem 0 0 0;
-  opacity: 0.9;
+  display: none;
 }
 
 .main {
-  flex: 1;
-  padding: 2rem 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.heroTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.heroQuote {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #666666;
+  margin: 2rem 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
 }
 
 .sectionTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 500;
   text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-  font-weight: 600;
+  margin-bottom: 3rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .categoryGrid {
-  max-width: 600px;
-  margin: 0 auto;
+  margin-bottom: 4rem;
 }
 
 .categories {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.categoryCard {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 1.5rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  color: white;
-  font-weight: 500;
-}
-
-.categoryCard:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.categoryIcon {
-  display: block;
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.categoryName {
-  font-size: 0.9rem;
-}
-
-.outfitSection {
   max-width: 800px;
   margin: 0 auto;
 }
 
+.categoryCard {
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.categoryCard:hover {
+  border-color: #111111;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.categoryIcon {
+  display: none;
+}
+
+.categoryName {
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #111111;
+}
+
+.outfitSection {
+  margin-top: 3rem;
+}
+
 .backButton {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .backButton button {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #EEEEEE;
+  color: #111111;
+  padding: 0.75rem 2rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .backButton button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  border-color: #111111;
+  background: #111111;
+  color: #FFFFFF;
 }
 
 .outfitGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
 }
 
 .outfitCard {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
   overflow: hidden;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
+  position: relative;
+  cursor: pointer;
 }
 
 .outfitCard:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: #111111;
 }
 
 .outfitImagePlaceholder {
-  height: 200px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  height: 400px;
+  background: #FAFAFA;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
+  position: relative;
+  overflow: hidden;
 }
 
 .outfitEmoji {
-  opacity: 0.7;
+  font-size: 4rem;
+  opacity: 0.3;
 }
 
 .outfitInfo {
   padding: 1.5rem;
+  text-align: center;
 }
 
 .outfitName {
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 500;
   margin: 0 0 1rem 0;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #111111;
 }
 
 .outfitTags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
 }
 
 .tag {
-  background: rgba(255, 255, 255, 0.2);
+  background: transparent;
+  border: 1px solid #EEEEEE;
   padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #666666;
+  font-weight: 500;
+}
+
+.tag:first-child {
+  background: #111111;
+  color: #FFFFFF;
+  border-color: #111111;
 }
 
 .outfitActions {
   display: flex;
   gap: 0.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
 }
 
-.tryButton {
+.outfitCard:hover .outfitActions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tryButton,
+.shopButton {
   flex: 1;
-  background: linear-gradient(45deg, #4ecdc4, #44a08d);
-  border: none;
-  color: white;
+  background: transparent;
+  border: 1px solid #111111;
+  color: #111111;
   padding: 0.75rem;
-  border-radius: 8px;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 0.9rem;
   text-decoration: none;
   display: inline-block;
   text-align: center;
 }
 
 .tryButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.shopButton {
-  flex: 1;
-  background: linear-gradient(45deg, #ff6b6b, #ff5722);
-  border: none;
-  color: white;
-  padding: 0.75rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
+  background: #111111;
+  color: #FFFFFF;
 }
 
 .shopButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background: #111111;
+  color: #FFFFFF;
 }
 
 .footer {
   text-align: center;
-  padding: 2rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  opacity: 0.7;
+  padding: 3rem 1rem;
+  border-top: 1px solid #EEEEEE;
+  color: #AAAAAA;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Label positioned on image */
+.labelOverlay {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #111111;
+  color: #FFFFFF;
+  padding: 0.5rem 1rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  z-index: 10;
 }
 
 /* Tablet styles */
 @media (min-width: 768px) {
-  .container {
-    padding: 0 2rem;
-  }
-  
-  .logo {
-    font-size: 3rem;
-  }
-  
-  .tagline {
-    font-size: 1.1rem;
-  }
-  
-  .categories {
-    grid-template-columns: repeat(3, 1fr);
+  .heroTitle {
+    font-size: 3.5rem;
   }
   
   .outfitGrid {
     grid-template-columns: repeat(2, 1fr);
   }
   
-  .sectionTitle {
-    font-size: 2rem;
+  .categories {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 /* Desktop styles */
 @media (min-width: 1024px) {
-  .container {
-    padding: 0 4rem;
-  }
-  
-  .categories {
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
   .outfitGrid {
     grid-template-columns: repeat(3, 1fr);
   }
   
-  .categoryCard {
-    padding: 2rem;
+  .heroTitle {
+    font-size: 4rem;
   }
   
-  .categoryIcon {
-    font-size: 2.5rem;
-  }
-  
-  .categoryName {
-    font-size: 1rem;
+  .nav {
+    gap: 3rem;
   }
 }
 
-/* Large desktop */
-@media (min-width: 1440px) {
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
+/* Mobile hamburger menu */
+@media (max-width: 767px) {
+  .nav {
+    display: none;
+  }
+  
+  .hamburger {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .outfitGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .heroTitle {
+    font-size: 2rem;
   }
 }

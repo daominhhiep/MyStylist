@@ -48,43 +48,53 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Style Lookbook - Choose Your Perfect Outfit</title>
-        <meta name="description" content="Discover and choose outfits without trying them on" />
+        <title>OutfitAI Lookbook - Phong Cách Thời Trang</title>
+        <meta name="description" content="Khám phá phong cách thời trang với AI" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <header className={styles.header}>
         <div className={styles.headerTop}>
-          <h1 className={styles.logo}>OutfitAI</h1>
+          <h1 className={styles.logo}>👗 OutfitAI</h1>
           <nav className={styles.nav}>
-            <Link href="/try-on">
-              <button className={styles.navButton}>🤖 AI Try-On</button>
+            <Link href="/" className={styles.navButton}>
+              Trang chủ
             </Link>
-            <Link href="/admin">
-              <button className={styles.navButton}>⚙️ Admin</button>
+            <Link href="/try-on" className={styles.navButton}>
+              Gợi ý AI
+            </Link>
+            <Link href="/admin" className={styles.navButton}>
+              Thử đồ
             </Link>
           </nav>
+          <button className={styles.hamburger}>☰</button>
         </div>
-        <p className={styles.tagline}>AI-powered outfit suggestions with virtual try-on</p>
       </header>
 
       <main className={styles.main}>
         {!selectedCategory ? (
-          <div className={styles.categoryGrid}>
-            <h2 className={styles.sectionTitle}>What's the occasion?</h2>
-            <div className={styles.categories}>
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`${styles.categoryCard} ${category.color}`}
-                >
-                  <span className={styles.categoryIcon}>{category.icon}</span>
-                  <span className={styles.categoryName}>{category.name}</span>
-                </button>
-              ))}
+          <>
+            <div className={styles.hero}>
+              <h1 className={styles.heroTitle}>Phong Cách Hot Hôm Nay</h1>
+              <p className={styles.heroQuote}>
+                "Thời trang không chỉ là quần áo – nó là cách bạn thể hiện chính mình."
+              </p>
             </div>
-          </div>
+            
+            <div className={styles.categoryGrid}>
+              <div className={styles.categories}>
+                {categories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setSelectedCategory(category.id)}
+                    className={styles.categoryCard}
+                  >
+                    <span className={styles.categoryName}>{category.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
         ) : (
           <div className={styles.outfitSection}>
             <div className={styles.backButton}>
@@ -102,21 +112,24 @@ const Home: NextPage = () => {
                 <div key={outfit.id} className={styles.outfitCard}>
                   <div className={styles.outfitImagePlaceholder}>
                     <span className={styles.outfitEmoji}>👗</span>
+                    {outfit.tags[0] && (
+                      <div className={styles.labelOverlay}>
+                        {outfit.tags[0]}
+                      </div>
+                    )}
                   </div>
                   <div className={styles.outfitInfo}>
                     <h3 className={styles.outfitName}>{outfit.name}</h3>
                     <div className={styles.outfitTags}>
-                      {outfit.tags.map((tag, index) => (
+                      {outfit.tags.slice(1).map((tag, index) => (
                         <span key={index} className={styles.tag}>
                           {tag}
                         </span>
                       ))}
                     </div>
                     <div className={styles.outfitActions}>
-                      <Link href="/try-on">
-                        <button className={styles.tryButton}>
-                          🤖 Try On
-                        </button>
+                      <Link href="/try-on" className={styles.tryButton}>
+                        Xem thêm
                       </Link>
                       <a 
                         href={outfit.affiliateLink} 
@@ -124,7 +137,7 @@ const Home: NextPage = () => {
                         rel="noopener noreferrer"
                         className={styles.shopButton}
                       >
-                        🛒 Shop
+                        Mua ngay
                       </a>
                     </div>
                   </div>
@@ -136,7 +149,7 @@ const Home: NextPage = () => {
       </main>
 
       <footer className={styles.footer}>
-        <p>© 2024 StyleBook - Your Digital Closet</p>
+        <p>© 2024 OutfitAI - Lookbook Thời Trang</p>
       </footer>
     </div>
   );
