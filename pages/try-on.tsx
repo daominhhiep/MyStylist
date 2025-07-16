@@ -6,7 +6,7 @@ import styles from '../styles/TryOn.module.css';
 
 const TryOnPage = () => {
   const { data: session } = useSession();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
   const [selectedItem, setSelectedItem] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
