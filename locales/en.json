@@ -1,0 +1,42 @@
+
+{
+  "nav": {
+    "home": "Home",
+    "admin": "Admin",
+    "tryOn": "Try On"
+  },
+  "home": {
+    "title": "Fashion Lookbook",
+    "description": "Discover the latest outfit trends"
+  },
+  "outfit": {
+    "modelSpecs": "Model Specifications",
+    "height": "Height",
+    "weight": "Weight",
+    "size": "Size",
+    "addToWardrobe": "Add to Wardrobe",
+    "share": "Share",
+    "itemBreakdown": "Item Breakdown",
+    "viewDetails": "View Details",
+    "buyOn": "Buy on"
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "addOutfit": "Add New Outfit",
+    "manageOutfits": "Manage Outfits"
+  },
+  "item": {
+    "price": "Price",
+    "description": "Description",
+    "addToCart": "Add to Cart"
+  },
+  "tags": {
+    "hot": "🔥 HOT",
+    "trending": "📈 TRENDING", 
+    "sponsored": "💰 SPONSORED",
+    "casual": "casual",
+    "timeless": "timeless",
+    "elegant": "elegant",
+    "professional": "professional"
+  }
+}

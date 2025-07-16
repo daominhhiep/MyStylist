@@ -1,4 +1,3 @@
-
 /* Minimal Monochrome Lookbook Design */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
@@ -23,7 +22,7 @@
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: space_between;
   align-items: center;
   padding: 0 1rem;
 }
@@ -277,7 +276,7 @@
   .heroTitle {
     font-size: 3.5rem;
   }
-  
+
   .outfitGrid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -288,11 +287,11 @@
   .outfitGrid {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   .heroTitle {
     font-size: 4rem;
   }
-  
+
   .nav {
     gap: 3rem;
   }
@@ -303,7 +302,7 @@
   .nav {
     display: none;
   }
-  
+
   .hamburger {
     display: block;
     background: none;
@@ -311,36 +310,36 @@
     font-size: 1.5rem;
     cursor: pointer;
   }
-  
+
   .main {
     padding: 2rem 1rem;
   }
-  
+
   .outfitGrid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
-  
-  
+
+
+
   .heroTitle {
     font-size: 1.8rem;
     letter-spacing: 0.1em;
   }
-  
+
   .heroQuote {
     font-size: 1rem;
   }
-  
+
   .logo {
     font-size: 1.5rem;
   }
-  
+
   .outfitActions {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .tryButton,
   .shopButton {
     padding: 0.8rem;

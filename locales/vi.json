@@ -1,0 +1,42 @@
+
+{
+  "nav": {
+    "home": "Trang chủ",
+    "admin": "Quản trị",
+    "tryOn": "Thử đồ"
+  },
+  "home": {
+    "title": "Lookbook Thời trang",
+    "description": "Khám phá những xu hướng outfit mới nhất"
+  },
+  "outfit": {
+    "modelSpecs": "Thông số người mẫu",
+    "height": "Chiều cao",
+    "weight": "Cân nặng", 
+    "size": "Size",
+    "addToWardrobe": "Thêm vào tủ đồ",
+    "share": "Chia sẻ",
+    "itemBreakdown": "Chi tiết từng món đồ",
+    "viewDetails": "Xem chi tiết",
+    "buyOn": "Mua trên"
+  },
+  "admin": {
+    "title": "Bảng điều khiển quản trị",
+    "addOutfit": "Thêm outfit mới",
+    "manageOutfits": "Quản lý outfit"
+  },
+  "item": {
+    "price": "Giá",
+    "description": "Mô tả",
+    "addToCart": "Thêm vào giỏ"
+  },
+  "tags": {
+    "hot": "🔥 HOT",
+    "trending": "📈 TRENDING",
+    "sponsored": "💰 TÀI TRỢ",
+    "casual": "thường ngày",
+    "timeless": "vượt thời gian",
+    "elegant": "thanh lịch", 
+    "professional": "công sở"
+  }
+}

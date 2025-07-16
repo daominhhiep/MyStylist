@@ -1,14 +1,15 @@
-
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../../styles/Outfit.module.css';
+import { useTranslation } from 'next-i18next';
 
 const OutfitDetail = () => {
   const router = useRouter();
   const { id } = router.query;
-  
+  const { t } = useTranslation();
+
 
   const outfit = {
     id: id,
@@ -98,14 +99,14 @@ const OutfitDetail = () => {
               </div>
               <p className={styles.description}>{outfit.description}</p>
               <div className={styles.modelSpecs}>
-                <h3>Thông số người mẫu</h3>
+                <h3>{t('outfit.modelSpecs')}</h3>
                 <div className={styles.specsGrid}>
                   <div className={styles.specItem}>
-                    <span className={styles.specLabel}>Chiều cao:</span>
+                    <span className={styles.specLabel}>{t('outfit.height')}:</span>
                     <span className={styles.specValue}>{outfit.modelSpecs.height}</span>
                   </div>
                   <div className={styles.specItem}>
-                    <span className={styles.specLabel}>Cân nặng:</span>
+                    <span className={styles.specLabel}>{t('outfit.weight')}:</span>
                     <span className={styles.specValue}>{outfit.modelSpecs.weight}</span>
                   </div>
                   <div className={styles.specItem}>
@@ -121,26 +122,26 @@ const OutfitDetail = () => {
                     <span className={styles.specValue}>{outfit.modelSpecs.hips}</span>
                   </div>
                   <div className={styles.specItem}>
-                    <span className={styles.specLabel}>Size mặc:</span>
+                    <span className={styles.specLabel}>{t('outfit.size')}:</span>
                     <span className={styles.specValue}>{outfit.modelSpecs.size}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            
+
 
             <div className={styles.actions}>
               <Link href="/try-on">
                 <button className={styles.addToWardrobeButton}>
-                  🤖 Thử đồ với AI
+                 {t('outfit.addToWardrobe')}
                 </button>
               </Link>
-              <button className={styles.shareButton}>Chia sẻ outfit</button>
+              <button className={styles.shareButton}>{t('outfit.share')}</button>
             </div>
 
             <div className={styles.itemBreakdown}>
-              <h3>What's Included</h3>
+              <h3>{t('outfit.itemBreakdown')}</h3>
               <div className={styles.items}>
                 {outfit.items.map((item, index) => (
                   <div key={index} className={styles.item}>
