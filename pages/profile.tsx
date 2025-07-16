@@ -61,22 +61,11 @@ export default function Profile() {
 
       <div className={styles.profileContainer}>
         <div className={styles.profileHeader}>
-          <Link href="/">
-            <button style={{ 
-              position: 'absolute', 
-              top: '2rem', 
-              left: '2rem',
-              background: 'white',
-              border: '1px solid #ddd',
-              padding: '0.5rem 1rem',
-              borderRadius: '8px',
-              cursor: 'pointer'
-            }}>
-              ← Về trang chủ
-            </button>
+          <Link href="/" className={styles.backButton}>
+            ← Về trang chủ
           </Link>
-          <h1>Thông tin cá nhân</h1>
-          <p>Cập nhật thông tin để có trải nghiệm tốt hất</p>
+          <h1 className={styles.profileTitle}>Thông tin cá nhân</h1>
+          <p className={styles.profileSubtitle}>Cập nhật thông tin để có trải nghiệm tốt nhất với gợi ý AI</p>
         </div>
 
         <div className={styles.userInfo}>
@@ -85,21 +74,13 @@ export default function Profile() {
             alt="Avatar"
             className={styles.userAvatar}
           />
-          <div>
+          <div className={styles.userDetails}>
             <div className={styles.userName}>{session.user?.name}</div>
             <div className={styles.userEmail}>{session.user?.email}</div>
           </div>
           <button 
             onClick={() => signOut({ callbackUrl: '/' })}
-            style={{
-              marginLeft: 'auto',
-              padding: '0.5rem 1rem',
-              background: '#ff4444',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer'
-            }}
+            className={styles.signOutButton}
           >
             Đăng xuất
           </button>

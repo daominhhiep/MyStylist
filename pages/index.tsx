@@ -51,6 +51,25 @@ const Home: NextPage = () => {
             <Link href="/admin" className={styles.navButton} onClick={() => setMobileMenuOpen(false)}>
               Thử đồ
             </Link>
+            <div className={styles.mobileOnlyActions}>
+              <div className={styles.languageSection}>
+                <LanguageSwitcher />
+              </div>
+              {session ? (
+                <Link href="/profile" className={`${styles.navButton} ${styles.profileNavButton}`} onClick={() => setMobileMenuOpen(false)}>
+                  <img 
+                    src={session.user?.image || '/default-avatar.png'} 
+                    alt="Profile" 
+                    className={styles.smallAvatar}
+                  />
+                  Thông tin cá nhân
+                </Link>
+              ) : (
+                <button className={`${styles.navButton} ${styles.loginNavButton}`} onClick={() => { signIn('google'); setMobileMenuOpen(false); }}>
+                  Đăng nhập Google
+                </button>
+              )}
+            </div>
           </nav>
           <div className={styles.headerActions}>
             <LanguageSwitcher />

@@ -1,4 +1,3 @@
-
 .container {
   min-height: 100vh;
   display: flex;
@@ -53,9 +52,8 @@
 }
 
 .signInButton:hover {
-  border-color: #4285F4;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .googleIcon {
@@ -66,38 +64,129 @@
 .profileContainer {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  background: #FFFFFF;
 }
 
 .profileHeader {
   text-align: center;
   margin-bottom: 3rem;
+  position: relative;
 }
 
-.profileHeader h1 {
+.backButton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+  border: 1px solid #111111;
+  color: #111111;
+  padding: 0.8rem 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+.backButton:hover {
+  background: #111111;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.profileTitle {
+  font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: #333;
+  font-weight: 500;
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #111111;
 }
 
-.profileHeader p {
-  color: #666;
+.profileSubtitle {
   font-size: 1.1rem;
+  color: #666666;
+  margin: 0;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: #FAFAFA;
+  border: 1px solid #EEEEEE;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  border-radius: 8px;
+}
+
+.userAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #EEEEEE;
+}
+
+.userDetails {
+  flex: 1;
+}
+
+.userName {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #111111;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.userEmail {
+  font-size: 1rem;
+  color: #666666;
+  letter-spacing: 0.05em;
+}
+
+.signOutButton {
+  background: transparent;
+  border: 1px solid #DC2626;
+  color: #DC2626;
+  padding: 0.8rem 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+.signOutButton:hover {
+  background: #DC2626;
+  color: #FFFFFF;
+  transform: translateY(-2px);
 }
 
 .profileForm {
-  background: white;
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
   padding: 2.5rem;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 .formGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .formGroup {
@@ -106,88 +195,82 @@
 }
 
 .formGroup label {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #333;
   font-size: 0.9rem;
+  font-weight: 500;
+  color: #111111;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 .formGroup input,
 .formGroup select {
+  background: #FAFAFA;
+  border: 1px solid #EEEEEE;
   padding: 1rem;
-  border: 2px solid #eee;
-  border-radius: 12px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
 }
 
 .formGroup input:focus,
 .formGroup select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #111111;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.1);
 }
 
 .saveButton {
-  width: 100%;
-  padding: 1.25rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #111111 0%, #333333 100%);
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 1.1rem;
+  padding: 1.2rem 2.5rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 8px;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
 }
 
 .saveButton:hover {
   transform: translateY(-2px);
-}
-
-.userInfo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-}
-
-.userAvatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-}
-
-.userName {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #333;
-}
-
-.userEmail {
-  color: #666;
-  font-size: 0.9rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #333333 0%, #111111 100%);
 }
 
 @media (max-width: 768px) {
-  .signInBox {
-    padding: 2rem;
+  .profileContainer {
+    padding: 1rem;
   }
-  
-  .title {
-    font-size: 1.5rem;
+
+  .userInfo {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
   }
-  
+
+  .profileTitle {
+    font-size: 1.8rem;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
   .profileForm {
     padding: 1.5rem;
   }
-  
-  .formGrid {
-    grid-template-columns: 1fr;
+
+  .backButton {
+    position: relative;
+    margin-bottom: 2rem;
+    display: inline-block;
   }
 }
