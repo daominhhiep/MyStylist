@@ -52,16 +52,23 @@ const Home: NextPage = () => {
               Thử đồ
             </Link>
           </nav>
-          <LanguageSwitcher />
-          {session ? (
-            <Link href="/profile" className={styles.navButton}>
-              Profile
-            </Link>
-          ) : (
-            <button className={styles.navButton} onClick={() => signIn('google')}>
-              Đăng nhập Google
-            </button>
-          )}
+          <div className={styles.headerActions}>
+            <LanguageSwitcher />
+            {session ? (
+              <Link href="/profile" className={styles.profileButton}>
+                <img 
+                  src={session.user?.image || '/default-avatar.png'} 
+                  alt="Profile" 
+                  className={styles.profileAvatar}
+                />
+                Profile
+              </Link>
+            ) : (
+              <button className={styles.loginButton} onClick={() => signIn('google')}>
+                Đăng nhập Google
+              </button>
+            )}
+          </div>
           <button className={styles.hamburger} onClick={toggleMobileMenu}>
             {mobileMenuOpen ? '✕' : '☰'}
           </button>
