@@ -1,6 +1,7 @@
 
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 
@@ -8,27 +9,39 @@ const Home: NextPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const categories = [
-    { id: 'casual', name: 'Casual', icon: '👕', color: 'bg-blue-500' },
+    { id: 'streetwear', name: 'Streetwear', icon: '🔥', color: 'bg-orange-500' },
+    { id: 'basic', name: 'Basic', icon: '👕', color: 'bg-blue-500' },
+    { id: 'vintage', name: 'Vintage', icon: '📻', color: 'bg-amber-600' },
+    { id: 'clean', name: 'Clean', icon: '✨', color: 'bg-gray-100' },
     { id: 'formal', name: 'Formal', icon: '👔', color: 'bg-gray-800' },
-    { id: 'sporty', name: 'Sporty', icon: '🏃', color: 'bg-green-500' },
-    { id: 'party', name: 'Party', icon: '🎉', color: 'bg-purple-500' },
-    { id: 'date', name: 'Date Night', icon: '❤️', color: 'bg-pink-500' },
-    { id: 'work', name: 'Work', icon: '💼', color: 'bg-indigo-500' }
+    { id: 'sporty', name: 'Sporty', icon: '🏃', color: 'bg-green-500' }
   ];
 
   const outfits = {
-    casual: [
-      { id: 1, name: 'Denim & Tee', image: '/outfit1.jpg', tags: ['comfortable', 'everyday'] },
-      { id: 2, name: 'Summer Vibes', image: '/outfit2.jpg', tags: ['light', 'fresh'] },
-      { id: 3, name: 'Cozy Layers', image: '/outfit3.jpg', tags: ['warm', 'stylish'] }
+    streetwear: [
+      { id: 1, name: 'Oversized Hoodie Set', image: '/outfit1.jpg', tags: ['🔥 HOT', 'trending'], affiliateLink: 'https://shope.ee/streetwear1' },
+      { id: 2, name: 'Urban Denim Look', image: '/outfit2.jpg', tags: ['edgy', 'cool'], affiliateLink: 'https://tiktok.com/shop/urban1' },
+      { id: 3, name: 'Graphic Tee Combo', image: '/outfit3.jpg', tags: ['casual', 'vibrant'], affiliateLink: 'https://shope.ee/graphic1' }
+    ],
+    basic: [
+      { id: 4, name: 'Minimalist Tee', image: '/outfit4.jpg', tags: ['simple', 'versatile'], affiliateLink: 'https://shope.ee/basic1' },
+      { id: 5, name: 'Classic Jeans Look', image: '/outfit5.jpg', tags: ['timeless', 'everyday'], affiliateLink: 'https://tiktok.com/shop/classic1' }
+    ],
+    vintage: [
+      { id: 6, name: 'Retro Denim Jacket', image: '/outfit6.jpg', tags: ['📈 TRENDING', 'throwback'], affiliateLink: 'https://shope.ee/vintage1' },
+      { id: 7, name: '90s Revival Set', image: '/outfit7.jpg', tags: ['nostalgic', 'unique'], affiliateLink: 'https://tiktok.com/shop/90s1' }
+    ],
+    clean: [
+      { id: 8, name: 'Minimalist Outfit', image: '/outfit8.jpg', tags: ['💰 SPONSORED', 'elegant'], affiliateLink: 'https://shope.ee/clean1' },
+      { id: 9, name: 'Monochrome Look', image: '/outfit9.jpg', tags: ['sophisticated', 'modern'], affiliateLink: 'https://tiktok.com/shop/mono1' }
     ],
     formal: [
-      { id: 4, name: 'Business Suit', image: '/outfit4.jpg', tags: ['professional', 'sharp'] },
-      { id: 5, name: 'Cocktail Dress', image: '/outfit5.jpg', tags: ['elegant', 'classy'] }
+      { id: 10, name: 'Business Suit', image: '/outfit10.jpg', tags: ['professional', 'sharp'], affiliateLink: 'https://shope.ee/formal1' },
+      { id: 11, name: 'Cocktail Dress', image: '/outfit11.jpg', tags: ['elegant', 'classy'], affiliateLink: 'https://tiktok.com/shop/cocktail1' }
     ],
     sporty: [
-      { id: 6, name: 'Gym Ready', image: '/outfit6.jpg', tags: ['active', 'breathable'] },
-      { id: 7, name: 'Athleisure', image: '/outfit7.jpg', tags: ['comfortable', 'trendy'] }
+      { id: 12, name: 'Gym Ready', image: '/outfit12.jpg', tags: ['active', 'breathable'], affiliateLink: 'https://shope.ee/gym1' },
+      { id: 13, name: 'Athleisure', image: '/outfit13.jpg', tags: ['comfortable', 'trendy'], affiliateLink: 'https://tiktok.com/shop/athleisure1' }
     ]
   };
 
@@ -41,8 +54,18 @@ const Home: NextPage = () => {
       </Head>
 
       <header className={styles.header}>
-        <h1 className={styles.logo}>StyleBook</h1>
-        <p className={styles.tagline}>Find your perfect outfit, no fitting room required</p>
+        <div className={styles.headerTop}>
+          <h1 className={styles.logo}>OutfitAI</h1>
+          <nav className={styles.nav}>
+            <Link href="/try-on">
+              <button className={styles.navButton}>🤖 AI Try-On</button>
+            </Link>
+            <Link href="/admin">
+              <button className={styles.navButton}>⚙️ Admin</button>
+            </Link>
+          </nav>
+        </div>
+        <p className={styles.tagline}>AI-powered outfit suggestions with virtual try-on</p>
       </header>
 
       <main className={styles.main}>
@@ -89,9 +112,21 @@ const Home: NextPage = () => {
                         </span>
                       ))}
                     </div>
-                    <button className={styles.tryButton}>
-                      Try This Look
-                    </button>
+                    <div className={styles.outfitActions}>
+                      <Link href="/try-on">
+                        <button className={styles.tryButton}>
+                          🤖 Try On
+                        </button>
+                      </Link>
+                      <a 
+                        href={outfit.affiliateLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={styles.shopButton}
+                      >
+                        🛒 Shop
+                      </a>
+                    </div>
                   </div>
                 </div>
               ))}

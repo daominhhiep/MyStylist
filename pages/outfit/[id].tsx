@@ -110,9 +110,19 @@ const OutfitDetail = () => {
             </div>
 
             <div className={styles.actions}>
-              <button className={styles.addToWardrobeButton}>
-                Add to My Wardrobe
-              </button>
+              <Link href="/try-on">
+                <button className={styles.addToWardrobeButton}>
+                  🤖 Try On with AI
+                </button>
+              </Link>
+              <a 
+                href="https://shope.ee/affiliate-link" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={styles.shopButton}
+              >
+                🛒 Shop on Shopee
+              </a>
               <button className={styles.shareButton}>Share Look</button>
             </div>
 
