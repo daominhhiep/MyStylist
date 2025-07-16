@@ -35,13 +35,13 @@ const OutfitDetail = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{outfit.name} - StyleBook</title>
+        <title>{outfit.name} - OutfitAI</title>
         <meta name="description" content={outfit.description} />
       </Head>
 
       <header className={styles.header}>
         <Link href="/">
-          <button className={styles.backButton}>← Back to Lookbook</button>
+          <button className={styles.backButton}>← Về trang chủ</button>
         </Link>
       </header>
 
@@ -112,18 +112,10 @@ const OutfitDetail = () => {
             <div className={styles.actions}>
               <Link href="/try-on">
                 <button className={styles.addToWardrobeButton}>
-                  🤖 Try On with AI
+                  🤖 Thử đồ với AI
                 </button>
               </Link>
-              <a 
-                href="https://shope.ee/affiliate-link" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className={styles.shopButton}
-              >
-                🛒 Shop on Shopee
-              </a>
-              <button className={styles.shareButton}>Share Look</button>
+              <button className={styles.shareButton}>Chia sẻ outfit</button>
             </div>
 
             <div className={styles.itemBreakdown}>

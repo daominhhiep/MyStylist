@@ -1,37 +1,53 @@
 
-/* Mobile-first outfit detail styles */
+/* Minimal Monochrome Outfit Detail Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #FFFFFF;
+  color: #111111;
+  font-family: 'Inter', sans-serif;
 }
 
 .header {
-  padding: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: #FFFFFF;
+  border-bottom: 1px solid #EEEEEE;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
 }
 
 .backButton {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #111111;
+  color: #111111;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  margin: 0 1rem;
 }
 
 .backButton:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #111111;
+  color: #FFFFFF;
+  transform: translateY(-1px);
 }
 
 .main {
-  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
 }
 
 .outfitLayout {
-  max-width: 1200px;
-  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
 }
 
 .imageSection {
@@ -40,20 +56,23 @@
 
 .mainImage {
   width: 100%;
-  height: 300px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  height: 400px;
+  background: #FAFAFA;
+  border: 1px solid #EEEEEE;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 4rem;
   margin-bottom: 1rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.mainImage:hover {
+  border-color: #111111;
 }
 
 .placeholderIcon {
-  opacity: 0.7;
+  opacity: 0.3;
 }
 
 .thumbnails {
@@ -66,65 +85,73 @@
 .thumbnail {
   min-width: 60px;
   height: 60px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  background: #FAFAFA;
+  border: 1px solid #EEEEEE;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .thumbnail:hover {
-  background: rgba(255, 255, 255, 0.2);
+  border-color: #111111;
 }
 
 .detailsSection {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 1.5rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  padding: 2rem;
 }
 
 .outfitInfo {
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .outfitTitle {
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 500;
   margin: 0 0 1rem 0;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .rating {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
 
 .stars {
-  color: #ffd700;
+  color: #111111;
 }
 
 .ratingText {
-  opacity: 0.8;
-  font-size: 0.9rem;
+  color: #666666;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .description {
   font-size: 1rem;
   line-height: 1.6;
-  margin-bottom: 1rem;
-  opacity: 0.9;
+  margin-bottom: 1.5rem;
+  color: #666666;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .price {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #4ecdc4;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #111111;
+  letter-spacing: 0.1em;
 }
 
 .options {
@@ -134,26 +161,35 @@
 .sizeSelector,
 .colorSelector {
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .sizeSelector h3,
 .colorSelector h3 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.1rem;
+  margin: 0 0 1rem 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #111111;
 }
 
 .sizeOptions {
   display: flex;
   gap: 0.5rem;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 .sizeButton {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #EEEEEE;
+  color: #111111;
+  padding: 0.6rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
   min-width: 50px;
@@ -161,27 +197,28 @@
 
 .sizeButton:hover,
 .sizeButton.selected {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: #111111;
+  color: #FFFFFF;
+  border-color: #111111;
 }
 
 .colorOptions {
   display: flex;
   gap: 0.5rem;
+  justify-content: center;
 }
 
 .colorButton {
   width: 40px;
   height: 40px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
+  border: 2px solid #EEEEEE;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .colorButton:hover,
 .colorButton.selected {
-  border-color: rgba(255, 255, 255, 0.8);
+  border-color: #111111;
   transform: scale(1.1);
 }
 
@@ -189,38 +226,47 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
+  justify-content: center;
   flex-direction: column;
 }
 
 .addToWardrobeButton {
-  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  background: #111111;
   border: none;
-  color: white;
-  padding: 1rem;
-  border-radius: 8px;
+  color: #FFFFFF;
+  padding: 1rem 2rem;
+  font-size: 0.7rem;
   font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
 }
 
 .addToWardrobeButton:hover {
+  background: #333333;
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .shareButton {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 1rem;
-  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #111111;
+  color: #111111;
+  padding: 1rem 2rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .shareButton:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #111111;
+  color: #FFFFFF;
 }
 
 .itemBreakdown {
@@ -228,8 +274,12 @@
 }
 
 .itemBreakdown h3 {
-  margin: 0 0 1rem 0;
-  font-size: 1.2rem;
+  margin: 0 0 1.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 .items {
@@ -242,51 +292,60 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  background: #FAFAFA;
+  border: 1px solid #EEEEEE;
+  transition: all 0.3s ease;
   flex-wrap: wrap;
+}
+
+.item:hover {
+  border-color: #111111;
 }
 
 .itemName {
   font-weight: 600;
   flex: 1;
   min-width: 120px;
+  font-size: 0.9rem;
 }
 
 .itemBrand {
-  opacity: 0.7;
-  font-size: 0.9rem;
+  color: #666666;
+  font-size: 0.8rem;
   flex: 1;
   min-width: 100px;
 }
 
 .itemPrice {
   font-weight: 600;
-  color: #4ecdc4;
+  color: #111111;
+  font-size: 0.9rem;
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  justify-content: center;
 }
 
 .tag {
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent;
+  border: 1px solid #EEEEEE;
   padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #666666;
+  font-weight: 500;
 }
 
 /* Tablet styles */
 @media (min-width: 768px) {
   .outfitLayout {
-    display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 3rem;
   }
   
   .imageSection {
@@ -294,7 +353,7 @@
   }
   
   .mainImage {
-    height: 400px;
+    height: 500px;
   }
   
   .actions {
@@ -304,28 +363,83 @@
   .item {
     flex-wrap: nowrap;
   }
+  
+  .outfitInfo {
+    text-align: left;
+  }
+  
+  .sizeSelector,
+  .colorSelector {
+    text-align: left;
+  }
+  
+  .sizeOptions,
+  .colorOptions {
+    justify-content: flex-start;
+  }
+  
+  .actions {
+    justify-content: flex-start;
+  }
+  
+  .tags {
+    justify-content: flex-start;
+  }
+  
+  .itemBreakdown h3 {
+    text-align: left;
+  }
 }
 
 /* Desktop styles */
 @media (min-width: 1024px) {
   .main {
-    padding: 2rem;
+    padding: 3rem 1rem;
   }
   
   .outfitLayout {
     grid-template-columns: 1.2fr 1fr;
-    gap: 3rem;
+    gap: 4rem;
   }
   
   .mainImage {
-    height: 500px;
+    height: 600px;
   }
   
   .outfitTitle {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
   }
   
   .detailsSection {
-    padding: 2rem;
+    padding: 3rem;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+  .main {
+    padding: 1rem;
+  }
+  
+  .detailsSection {
+    padding: 1.5rem;
+  }
+  
+  .outfitTitle {
+    font-size: 1.5rem;
+  }
+  
+  .mainImage {
+    height: 300px;
+  }
+  
+  .actions {
+    gap: 0.5rem;
+  }
+  
+  .addToWardrobeButton,
+  .shareButton {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.6rem;
   }
 }
