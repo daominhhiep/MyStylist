@@ -25,9 +25,27 @@ const OutfitDetail = () => {
       { name: 'white', label: 'White', color: '#FFFFFF' }
     ],
     items: [
-      { name: 'Denim Jacket', brand: 'Urban Style', price: '$45' },
-      { name: 'White T-Shirt', brand: 'Basic Tee', price: '$15' },
-      { name: 'Blue Jeans', brand: 'Comfort Fit', price: '$29' }
+      { 
+        name: 'Denim Jacket', 
+        brand: 'Urban Style', 
+        price: '$45',
+        shopeeLink: 'https://shopee.vn/jacket-123',
+        tiktokLink: 'https://shop.tiktok.com/jacket-123'
+      },
+      { 
+        name: 'White T-Shirt', 
+        brand: 'Basic Tee', 
+        price: '$15',
+        shopeeLink: 'https://shopee.vn/tshirt-456',
+        tiktokLink: 'https://shop.tiktok.com/tshirt-456'
+      },
+      { 
+        name: 'Blue Jeans', 
+        brand: 'Comfort Fit', 
+        price: '$29',
+        shopeeLink: 'https://shopee.vn/jeans-789',
+        tiktokLink: 'https://shop.tiktok.com/jeans-789'
+      }
     ],
     tags: ['casual', 'comfortable', 'versatile']
   };
@@ -123,9 +141,32 @@ const OutfitDetail = () => {
               <div className={styles.items}>
                 {outfit.items.map((item, index) => (
                   <div key={index} className={styles.item}>
-                    <span className={styles.itemName}>{item.name}</span>
-                    <span className={styles.itemBrand}>{item.brand}</span>
-                    <span className={styles.itemPrice}>{item.price}</span>
+                    <div className={styles.itemImage}>
+                      <span className={styles.itemIcon}>👕</span>
+                    </div>
+                    <div className={styles.itemDetails}>
+                      <span className={styles.itemName}>{item.name}</span>
+                      <span className={styles.itemBrand}>{item.brand}</span>
+                      <span className={styles.itemPrice}>{item.price}</span>
+                    </div>
+                    <div className={styles.itemActions}>
+                      <a 
+                        href={item.shopeeLink || '#'} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={styles.shopeeButton}
+                      >
+                        Shopee
+                      </a>
+                      <a 
+                        href={item.tiktokLink || '#'} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={styles.tiktokButton}
+                      >
+                        TikTok
+                      </a>
+                    </div>
                   </div>
                 ))}
               </div>

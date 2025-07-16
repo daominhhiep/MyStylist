@@ -75,17 +75,9 @@ const Home: NextPage = () => {
                   ))}
                 </div>
                 <div className={styles.outfitActions}>
-                  <Link href={`/outfit/${outfit.id}`} className={styles.tryButton}>
+                  <Link href={`/outfit/${outfit.id}`} className={styles.viewButton}>
                     Xem thêm
                   </Link>
-                  <a 
-                    href={outfit.affiliateLink} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={styles.shopButton}
-                  >
-                    Mua ngay
-                  </a>
                 </div>
               </div>
             </div>

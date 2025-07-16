@@ -224,13 +224,12 @@
   transform: translateY(0);
 }
 
-.tryButton,
-.shopButton {
-  flex: 1;
+.viewButton {
+  width: 100%;
   background: transparent;
   border: 1px solid #111111;
   color: #111111;
-  padding: 0.6rem;
+  padding: 0.8rem 1.5rem;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.15em;
@@ -242,13 +241,7 @@
   text-align: center;
 }
 
-.tryButton:hover {
-  background: #111111;
-  color: #FFFFFF;
-  transform: translateY(-1px);
-}
-
-.shopButton:hover {
+.viewButton:hover {
   background: #111111;
   color: #FFFFFF;
   transform: translateY(-1px);

@@ -285,42 +285,100 @@
 .items {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem;
   background: #FAFAFA;
   border: 1px solid #EEEEEE;
   transition: all 0.3s ease;
-  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .item:hover {
   border-color: #111111;
+  transform: translateY(-2px);
+}
+
+.itemImage {
+  width: 60px;
+  height: 60px;
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.itemIcon {
+  font-size: 1.5rem;
+  opacity: 0.4;
+}
+
+.itemDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .itemName {
   font-weight: 600;
-  flex: 1;
-  min-width: 120px;
   font-size: 0.9rem;
+  color: #111111;
 }
 
 .itemBrand {
   color: #666666;
   font-size: 0.8rem;
-  flex: 1;
-  min-width: 100px;
+  letter-spacing: 0.05em;
 }
 
 .itemPrice {
   font-weight: 600;
   color: #111111;
   font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.itemActions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.shopeeButton,
+.tiktokButton {
+  background: transparent;
+  border: 1px solid #111111;
+  color: #111111;
+  padding: 0.5rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  min-width: 70px;
+}
+
+.shopeeButton:hover {
+  background: #EE4D2D;
+  color: #FFFFFF;
+  border-color: #EE4D2D;
+}
+
+.tiktokButton:hover {
+  background: #000000;
+  color: #FFFFFF;
+  border-color: #000000;
 }
 
 .tags {
@@ -441,5 +499,25 @@
   .shareButton {
     padding: 0.8rem 1.5rem;
     font-size: 0.6rem;
+  }
+  
+  .item {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .itemDetails {
+    text-align: center;
+  }
+  
+  .itemActions {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .shopeeButton,
+  .tiktokButton {
+    flex: 1;
   }
 }
