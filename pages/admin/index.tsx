@@ -87,10 +87,12 @@ const AdminDashboard = () => {
       </Head>
 
       <header className={styles.header}>
-        <h1>OutfitAI Admin</h1>
-        <Link href="/">
-          <button className={styles.backButton}>← Back to Site</button>
-        </Link>
+        <div className={styles.headerTop}>
+          <h1>👗 OutfitAI Admin</h1>
+          <Link href="/">
+            <button className={styles.backButton}>← Về trang chủ</button>
+          </Link>
+        </div>
       </header>
 
       <main className={styles.main}>
