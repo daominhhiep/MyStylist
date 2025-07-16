@@ -15,9 +15,16 @@ const OutfitDetail = () => {
     id: id,
     name: 'Casual Denim Look',
     description: 'Perfect for everyday wear with a relaxed yet stylish vibe',
-    price: '$89',
     rating: 4.8,
     reviews: 127,
+    modelSpecs: {
+      height: '170cm',
+      weight: '55kg',
+      chest: '86cm',
+      waist: '65cm',
+      hips: '90cm',
+      size: 'Size M'
+    },
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
       { name: 'default', label: 'Original', color: '#4169E1' },
@@ -26,6 +33,7 @@ const OutfitDetail = () => {
     ],
     items: [
       { 
+        id: 'jacket-123',
         name: 'Denim Jacket', 
         brand: 'Urban Style', 
         price: '$45',
@@ -33,6 +41,7 @@ const OutfitDetail = () => {
         tiktokLink: 'https://shop.tiktok.com/jacket-123'
       },
       { 
+        id: 'tshirt-456',
         name: 'White T-Shirt', 
         brand: 'Basic Tee', 
         price: '$15',
@@ -40,6 +49,7 @@ const OutfitDetail = () => {
         tiktokLink: 'https://shop.tiktok.com/tshirt-456'
       },
       { 
+        id: 'jeans-789',
         name: 'Blue Jeans', 
         brand: 'Comfort Fit', 
         price: '$29',
@@ -88,7 +98,35 @@ const OutfitDetail = () => {
                 </span>
               </div>
               <p className={styles.description}>{outfit.description}</p>
-              <div className={styles.price}>{outfit.price}</div>
+              <div className={styles.modelSpecs}>
+                <h3>Thông số người mẫu</h3>
+                <div className={styles.specsGrid}>
+                  <div className={styles.specItem}>
+                    <span className={styles.specLabel}>Chiều cao:</span>
+                    <span className={styles.specValue}>{outfit.modelSpecs.height}</span>
+                  </div>
+                  <div className={styles.specItem}>
+                    <span className={styles.specLabel}>Cân nặng:</span>
+                    <span className={styles.specValue}>{outfit.modelSpecs.weight}</span>
+                  </div>
+                  <div className={styles.specItem}>
+                    <span className={styles.specLabel}>Vòng ngực:</span>
+                    <span className={styles.specValue}>{outfit.modelSpecs.chest}</span>
+                  </div>
+                  <div className={styles.specItem}>
+                    <span className={styles.specLabel}>Vòng eo:</span>
+                    <span className={styles.specValue}>{outfit.modelSpecs.waist}</span>
+                  </div>
+                  <div className={styles.specItem}>
+                    <span className={styles.specLabel}>Vòng hông:</span>
+                    <span className={styles.specValue}>{outfit.modelSpecs.hips}</span>
+                  </div>
+                  <div className={styles.specItem}>
+                    <span className={styles.specLabel}>Size mặc:</span>
+                    <span className={styles.specValue}>{outfit.modelSpecs.size}</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className={styles.options}>
@@ -141,11 +179,15 @@ const OutfitDetail = () => {
               <div className={styles.items}>
                 {outfit.items.map((item, index) => (
                   <div key={index} className={styles.item}>
-                    <div className={styles.itemImage}>
-                      <span className={styles.itemIcon}>👕</span>
-                    </div>
+                    <Link href={`/item/${item.id}`}>
+                      <div className={styles.itemImage}>
+                        <span className={styles.itemIcon}>👕</span>
+                      </div>
+                    </Link>
                     <div className={styles.itemDetails}>
-                      <span className={styles.itemName}>{item.name}</span>
+                      <Link href={`/item/${item.id}`} className={styles.itemNameLink}>
+                        <span className={styles.itemName}>{item.name}</span>
+                      </Link>
                       <span className={styles.itemBrand}>{item.brand}</span>
                       <span className={styles.itemPrice}>{item.price}</span>
                     </div>
