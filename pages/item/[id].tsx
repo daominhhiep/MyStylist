@@ -1,4 +1,3 @@
-
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Head from 'next/head';
@@ -46,9 +45,38 @@ const ItemDetail = () => {
       </Head>
 
       <header className={styles.header}>
-        <Link href="/">
-          <button className={styles.backButton}>← Về trang chủ</button>
-        </Link>
+        <div className={styles.headerTop}>
+          <Link href="/" className={styles.backButton}>
+            ← Về trang chủ
+          </Link>
+          <h1 className={styles.logo}>👗 OutfitAI</h1>
+
+          <div className={styles.headerActions}>
+            {session ? (
+              <Link href="/profile" className={styles.profileButton}>
+                <img 
+                  src={session.user?.image || '/default-avatar.png'} 
+                  alt="Profile"
+                  className={styles.profileAvatar}
+                />
+                {session.user?.name}
+              </Link>
+            ) : (
+              <Link href="/auth/signin" className={styles.loginButton}>
+                Đăng nhập
+              </Link>
+            )}
+          </div>
+
+          <div className={styles.mobileOnlyActions}>
+            <button 
+              className={styles.hamburger}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              ☰
+            </button>
+          </div>
+        </div>
       </header>
 
       <main className={styles.main}>
@@ -59,10 +87,10 @@ const ItemDetail = () => {
             </div>
             <div className={styles.thumbnails}>
               {[1, 2, 3, 4].map((thumb) => (
-                <div key={thumb} className={styles.thumbnail}>
-                  <span>📷</span>
-                </div>
-              ))}
+              <div key={thumb} className={styles.thumbnail}>
+                <span>📷</span>
+              </div>
+            ))}
             </div>
           </div>
 
@@ -70,7 +98,7 @@ const ItemDetail = () => {
             <div className={styles.itemInfo}>
               <div className={styles.brand}>{item.brand}</div>
               <h1 className={styles.itemTitle}>{item.name}</h1>
-              
+
               <div className={styles.rating}>
                 <span className={styles.stars}>⭐⭐⭐⭐⭐</span>
                 <span className={styles.ratingText}>

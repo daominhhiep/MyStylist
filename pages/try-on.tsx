@@ -1,10 +1,12 @@
-
-import { useState, useRef } from 'react';
+import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/TryOn.module.css';
 
 const TryOnPage = () => {
+  const { data: session } = useSession();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -36,7 +38,7 @@ const TryOnPage = () => {
     }
 
     setIsProcessing(true);
-    
+
     // Simulate AI processing (in real implementation, this would call TryOnDiffusion API)
     setTimeout(() => {
       setResult({
@@ -50,17 +52,68 @@ const TryOnPage = () => {
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>AI Try-On - OutfitAI</title>
-        <meta name="description" content="Try on clothes virtually with AI" />
-      </Head>
+        <Head>
+          <title>Thử đồ AI - OutfitAI</title>
+          <meta name="description" content="Thử đồ thời trang với AI" />
+        </Head>
 
-      <header className={styles.header}>
-        <Link href="/">
-          <button className={styles.backButton}>← Back to Lookbook</button>
-        </Link>
-        <h1>AI Virtual Try-On</h1>
-      </header>
+        <header className={styles.header}>
+          <div className={styles.headerTop}>
+            <h1 className={styles.logo}>👗 OutfitAI</h1>
+
+            <nav className={`${styles.nav} ${mobileMenuOpen ? styles.mobileMenuOpen : ''}`}>
+              <Link href="/" className={styles.navButton}>Trang chủ</Link>
+              <Link href="/try-on" className={styles.navButton}>Thử đồ AI</Link>
+              <Link href="/admin" className={styles.navButton}>Admin</Link>
+
+              <div className={styles.mobileOnlyActions}>
+                <div className={styles.languageSection}>
+                  {/* Language switcher can be added here */}
+                </div>
+                {session ? (
+                  <Link href="/profile" className={`${styles.navButton} ${styles.profileNavButton}`}>
+                    <img 
+                      src={session.user?.image || '/default-avatar.png'} 
+                      alt="Profile"
+                      className={styles.smallAvatar}
+                    />
+                    Thông tin cá nhân
+                  </Link>
+                ) : (
+                  <Link href="/auth/signin" className={`${styles.navButton} ${styles.loginNavButton}`}>
+                    Đăng nhập
+                  </Link>
+                )}
+              </div>
+            </nav>
+
+            <div className={styles.headerActions}>
+              {session ? (
+                <Link href="/profile" className={styles.profileButton}>
+                  <img 
+                    src={session.user?.image || '/default-avatar.png'} 
+                    alt="Profile"
+                    className={styles.profileAvatar}
+                  />
+                  {session.user?.name}
+                </Link>
+              ) : (
+                <Link href="/auth/signin" className={styles.loginButton}>
+                  Đăng nhập
+                </Link>
+              )}
+            </div>
+
+            <div className={styles.mobileOnlyActions}>
+              <button 
+                className={styles.hamburger}
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                ☰
+              </button>
+            </div>
+          </div>
+        </header>
 
       <main className={styles.main}>
         {!result ? (
@@ -146,7 +199,7 @@ const TryOnPage = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className={styles.actions}>
               <button 
                 onClick={() => setResult(null)}
