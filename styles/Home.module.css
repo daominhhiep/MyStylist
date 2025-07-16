@@ -299,6 +299,55 @@
   }
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profileButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  color: #333;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.profileButton:hover {
+  border-color: #667eea;
+  transform: translateY(-1px);
+}
+
+.profileAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.loginButton {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.loginButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
 /* Hamburger menu */
 .hamburger {
   display: none;
@@ -319,6 +368,24 @@
 @media (max-width: 767px) {
   .headerTop {
     position: relative;
+  }
+
+  .headerActions {
+    gap: 0.5rem;
+  }
+
+  .profileButton {
+    padding: 0.5rem;
+    font-size: 0;
+  }
+
+  .profileButton img {
+    margin: 0;
+  }
+
+  .loginButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
   }
 
   .nav {

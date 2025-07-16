@@ -1,13 +1,14 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import { useState } from "react";
-import styles from "../styles/Home.module.css";
-import { LanguageSwitcher } from "../components/LanguageSwitcher";
+import { useState } from 'react';
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useSession, signIn } from 'next-auth/react';
+import styles from '../styles/Home.module.css';
+import { LanguageSwitcher } from '../components/LanguageSwitcher';
 
 const Home: NextPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -26,6 +27,8 @@ const Home: NextPage = () => {
     { id: 11, name: 'Cocktail Dress', style: 'Formal', tags: ['hot'], affiliateLink: 'https://tiktok.com/shop/formal2' },
     { id: 12, name: 'Gym Ready', style: 'Sporty', tags: ['trending'], affiliateLink: 'https://shope.ee/gym1' }
   ];
+
+  const { data: session } = useSession();
 
   return (
     <div className={styles.container}>
@@ -50,6 +53,15 @@ const Home: NextPage = () => {
             </Link>
           </nav>
           <LanguageSwitcher />
+          {session ? (
+            <Link href="/profile" className={styles.navButton}>
+              Profile
+            </Link>
+          ) : (
+            <button className={styles.navButton} onClick={() => signIn('google')}>
+              Đăng nhập Google
+            </button>
+          )}
           <button className={styles.hamburger} onClick={toggleMobileMenu}>
             {mobileMenuOpen ? '✕' : '☰'}
           </button>
