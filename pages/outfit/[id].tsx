@@ -8,8 +8,7 @@ import styles from '../../styles/Outfit.module.css';
 const OutfitDetail = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [selectedSize, setSelectedSize] = useState('M');
-  const [selectedColor, setSelectedColor] = useState('default');
+  
 
   const outfit = {
     id: id,
@@ -129,41 +128,7 @@ const OutfitDetail = () => {
               </div>
             </div>
 
-            <div className={styles.options}>
-              <div className={styles.sizeSelector}>
-                <h3>Size</h3>
-                <div className={styles.sizeOptions}>
-                  {outfit.sizes.map((size) => (
-                    <button
-                      key={size}
-                      className={`${styles.sizeButton} ${
-                        selectedSize === size ? styles.selected : ''
-                      }`}
-                      onClick={() => setSelectedSize(size)}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className={styles.colorSelector}>
-                <h3>Color Variation</h3>
-                <div className={styles.colorOptions}>
-                  {outfit.colors.map((color) => (
-                    <button
-                      key={color.name}
-                      className={`${styles.colorButton} ${
-                        selectedColor === color.name ? styles.selected : ''
-                      }`}
-                      onClick={() => setSelectedColor(color.name)}
-                      style={{ backgroundColor: color.color }}
-                      title={color.label}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
+            
 
             <div className={styles.actions}>
               <Link href="/try-on">
