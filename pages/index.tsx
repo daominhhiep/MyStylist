@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
+import { LanguageSwitcher } from "../components/LanguageSwitcher";
 
 const Home: NextPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -48,6 +49,7 @@ const Home: NextPage = () => {
               Thử đồ
             </Link>
           </nav>
+          <LanguageSwitcher />
           <button className={styles.hamburger} onClick={toggleMobileMenu}>
             {mobileMenuOpen ? '✕' : '☰'}
           </button>

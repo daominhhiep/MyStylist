@@ -22,7 +22,7 @@
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: space_between;
+  justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
 }
@@ -40,6 +40,8 @@
   display: flex;
   gap: 2.5rem;
   align-items: center;
+  margin-left: auto;
+  margin-right: 2rem;
 }
 
 .navButton {
@@ -333,6 +335,8 @@
     gap: 1rem;
     z-index: 1000;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .nav.mobileMenuOpen {
@@ -341,6 +345,7 @@
 
   .hamburger {
     display: block;
+    margin-left: auto;
   }
 
   .navButton {

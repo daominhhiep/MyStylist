@@ -225,6 +225,207 @@
   transition: all 0.3s ease;
 }
 
+/* Minimal Monochrome Admin Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+.container {
+  min-height: 100vh;
+  background: #FFFFFF;
+  color: #111111;
+  font-family: 'Inter', sans-serif;
+}
+
+.header {
+  background: #FFFFFF;
+  border-bottom: 1px solid #EEEEEE;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.headerTop {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+  color: #111111;
+  letter-spacing: 0.15em;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+.uploadSection {
+  background: #FAFAFA;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  border: 1px solid #EEEEEE;
+}
+
+.uploadSection h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.input, .select, .textarea {
+  padding: 0.8rem;
+  border: 1px solid #EEEEEE;
+  background: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #111111;
+}
+
+.input:focus, .select:focus, .textarea:focus {
+  outline: none;
+  border-color: #111111;
+}
+
+.addButton {
+  background: #111111;
+  color: #FFFFFF;
+  border: none;
+  padding: 0.8rem 2rem;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.addButton:hover {
+  background: #333333;
+  transform: translateY(-1px);
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.productCard {
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.productCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.productName {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.productCategory {
+  font-size: 0.8rem;
+  color: #666666;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.productPrice {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.productLabel {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.labelHot {
+  background: #FF4444;
+  color: #FFFFFF;
+}
+
+.labelSponsored {
+  background: #FFD700;
+  color: #111111;
+}
+
+.labelTrending {
+  background: #00AA44;
+  color: #FFFFFF;
+}
+
+.stats {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.stat {
+  font-size: 0.8rem;
+  color: #666666;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.cardActions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.linkButton {
+  background: transparent;
+  border: 1px solid #111111;
+  color: #111111;
+  padding: 0.6rem 1.5rem;
+  cursor: pointer;
+  flex: 1;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
+
 .linkButton:hover {
   background: #111111;
   color: #FFFFFF;
@@ -271,6 +472,8 @@
   display: flex;
   gap: 2rem;
   align-items: center;
+  margin-left: auto;
+  margin-right: 2rem;
 }
 
 .navButton {
@@ -316,6 +519,8 @@
     gap: 1rem;
     z-index: 1000;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .nav.mobileMenuOpen {
@@ -324,6 +529,7 @@
 
   .hamburger {
     display: block;
+    margin-left: auto;
   }
 
   .navButton {
