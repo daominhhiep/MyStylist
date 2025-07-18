@@ -4,8 +4,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 import {LanguageSwitcher} from '../components/LanguageSwitcher';
-import {useAuth} from "../components/AuthProvider";
-import { outfits_mock } from "../mock/data";
+import { useAuth } from '../components/AuthProvider';
+import { useOutfits } from '../hooks/useOutfits';
 import Navbar from "../components/NavBar";
 
 const Home: NextPage = () => {
@@ -15,9 +15,14 @@ const Home: NextPage = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const outfits = outfits_mock
+  const {
+    outfits,
+    loading,
+    hasMore,
+    loadMore,
+  } = useOutfits();
 
-  const {user, signInWithGoogle, signOut, userProfile, loading} = useAuth();
+  const {user, signInWithGoogle, signOut, userProfile, loading: authLoading} = useAuth();
 
   return (
     <div className={styles.container}>
@@ -40,16 +45,19 @@ const Home: NextPage = () => {
             <div key={outfit.id} className={styles.outfitCard}>
               <Link href={`/outfit/${outfit.id}`}>
                 <div className={styles.outfitImagePlaceholder}>
-                  <span className={styles.outfitEmoji}>👗</span>
-                  {outfit.tags[0] && (
-                    <div className={styles.labelOverlay}>
-                      {outfit.tags[0]}
-                    </div>
+                  {outfit.images && outfit.images.length > 0 ? (
+                    <img 
+                      src={outfit.images[0]} 
+                      alt={outfit.title}
+                      className={styles.outfitImage}
+                    />
+                  ) : (
+                    <span className={styles.outfitEmoji}>👗</span>
                   )}
                 </div>
               </Link>
               <div className={styles.outfitInfo}>
-                <h3 className={styles.outfitName}>{outfit.name}</h3>
+                <h3 className={styles.outfitName}>{outfit.title}</h3>
                 <div className={styles.outfitStyle}>{outfit.style}</div>
                 <div className={styles.outfitTags}>
                   {outfit.tags.slice(1).map((tag, index) => (
@@ -67,6 +75,20 @@ const Home: NextPage = () => {
             </div>
           ))}
         </div>
+
+        {loading && (
+          <div className={styles.loading}>
+            <p>Loading outfits...</p>
+          </div>
+        )}
+
+        {hasMore && !loading && (
+          <div className={styles.loadMore}>
+            <button onClick={loadMore} className={styles.loadMoreButton}>
+              Load More Outfits
+            </button>
+          </div>
+        )}
       </main>
 
       <footer className={styles.footer}>

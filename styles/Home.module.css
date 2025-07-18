@@ -191,6 +191,39 @@
   opacity: 0.3;
 }
 
+.outfitImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.loadMore {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loadMoreButton {
+  background: #111111;
+  color: #FFFFFF;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.loadMoreButton:hover {
+  background: #333333;
+}
+
 .outfitInfo {
   padding: 1.5rem;
   text-align: center;

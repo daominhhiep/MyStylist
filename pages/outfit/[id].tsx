@@ -9,6 +9,7 @@ const OutfitDetail = () => {
   const router = useRouter();
   const { id } = router.query;
   const { t } = useTranslation();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
 
   const outfit = {
@@ -57,7 +58,12 @@ const OutfitDetail = () => {
         tiktokLink: 'https://shop.tiktok.com/jeans-789'
       }
     ],
-    tags: ['casual', 'comfortable', 'versatile']
+    tags: ['casual', 'comfortable', 'versatile'],
+    images: [
+        'https://example.com/image1.jpg',
+        'https://example.com/image2.jpg',
+        'https://example.com/image3.jpg'
+    ]
   };
 
   return (
@@ -71,15 +77,29 @@ const OutfitDetail = () => {
         <div className={styles.outfitLayout}>
           <div className={styles.imageSection}>
             <div className={styles.mainImage}>
-              <span className={styles.placeholderIcon}>👗</span>
+              {outfit.images && outfit.images.length > 0 ? (
+                <img 
+                  src={outfit.images[currentImageIndex]} 
+                  alt={outfit.name}
+                  className={styles.image}
+                />
+              ) : (
+                <span className={styles.outfitEmoji}>👕</span>
+              )}
             </div>
-            <div className={styles.thumbnails}>
-              {[1, 2, 3, 4].map((thumb) => (
-                <div key={thumb} className={styles.thumbnail}>
-                  <span>📷</span>
-                </div>
-              ))}
-            </div>
+            {outfit.images && outfit.images.length > 1 && (
+              <div className={styles.thumbnails}>
+                {outfit.images.map((image, index) => (
+                  <img 
+                    key={index}
+                    src={image}
+                    alt={`${outfit.name} ${index + 1}`}
+                    className={`${styles.thumbnail} ${index === currentImageIndex ? styles.activeThumbnail : ''}`}
+                    onClick={() => setCurrentImageIndex(index)}
+                  />
+                ))}
+              </div>
+            )}
           </div>
 
           <div className={styles.detailsSection}>
