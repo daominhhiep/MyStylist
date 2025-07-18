@@ -107,6 +107,7 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .mainImage {
@@ -183,6 +184,58 @@
   color: #666666;
   margin: 0;
   line-height: 1.4;
+}
+
+.imageNavigation {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.imageNavButton {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.imageNavButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.imageIndicators {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.imageIndicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.imageIndicator.active {
+  background: white;
+}
+
+.imageIndicator:hover {
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .itemActions {

@@ -1,4 +1,3 @@
-
 export interface MockOutfitItem {
   id: string;
   name: string;
@@ -484,8 +483,9 @@ export const outfits_mock: MockOutfit[] = [
     name: 'Vintage Romance',
     description: 'Timeless vintage pieces with romantic feminine touches',
     images: [
-      'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400',
-      'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400'
+      'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1583743814966-8936f37f147a?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1494790108755-2616c27ce725?w=400&h=600&fit=crop'
     ],
     items: [
       items_mock.find(item => item.id === 'dress-001')!,
@@ -518,8 +518,9 @@ export const outfits_mock: MockOutfit[] = [
     name: 'Clean Girl Aesthetic',
     description: 'Minimalist and effortless clean girl style',
     images: [
-      'https://images.unsplash.com/photo-1494790108755-2616c933e68c?w=400',
-      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400'
+      'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1544957992-20514f595d6f?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=600&fit=crop'
     ],
     items: [
       items_mock.find(item => item.id === 'tshirt-001')!,
@@ -675,7 +676,8 @@ export const outfits_mock: MockOutfit[] = [
       'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=400'
     ],
     items: [
-      items_mock.find(item => item.id === 'dress-001')!,
+      items_mock```text
+.find(item => item.id === 'dress-001')!,
       items_mock.find(item => item.id === 'cardigan-001')!,
       items_mock.find(item => item.id === 'sandals-001')!,
       items_mock.find(item => item.id === 'scarf-001')!
@@ -719,8 +721,9 @@ export const outfits_mock: MockOutfit[] = [
     title: 'Minimalist Chic',
     description: 'Clean lines and neutral colors for effortless style',
     images: [
-      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400',
-      'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400'
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=600&fit=crop'
     ],
     items: [
       items_mock.find(item => item.id === 'tshirt-001')!,
@@ -985,6 +988,31 @@ export const outfits_mock: MockOutfit[] = [
     images: [
       'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=400',
       'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=400'
+    ],
+    items: [
+      items_mock.find(item => item.id === 'jumpsuit-001')!,
+      items_mock.find(item => item.id === 'cardigan-001')!,
+      items_mock.find(item => item.id === 'boots-001')!,
+      items_mock.find(item => item.id === 'scarf-001')!
+    ],
+    tags: ['artsy', 'creative', 'unique'],
+    style: 'Boho',
+    createdAt: new Date(Date.now() - 1900800000).toISOString(),
+    createdBy: 'admin',
+    isHot: true,
+    isSponsored: false,
+    isTrending: true,
+    views: 267,
+    clicks: 58
+  },
+  {
+    id: '23',
+    title: 'Japan Style',
+    description: 'Japan style with new trend',
+    images: [
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1503342452485-86b7f54527bb?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1492288991661-058aa541ff43?w=400&h=600&fit=crop'
     ],
     items: [
       items_mock.find(item => item.id === 'jumpsuit-001')!,

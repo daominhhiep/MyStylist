@@ -14,6 +14,7 @@ const OutfitDetail = () => {
   const { t } = useTranslation();
   const [outfit, setOutfit] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchOutfit = async () => {
@@ -90,11 +91,44 @@ const OutfitDetail = () => {
           <div className={styles.imageSection}>
             <div className={styles.mainImageContainer}>
               {outfit.images && outfit.images.length > 0 ? (
-                <img 
-                  src={outfit.images[0]} 
-                  alt={outfit.title || outfit.name}
-                  className={styles.mainImage}
-                />
+                <>
+                  <img 
+                    src={outfit.images[currentImageIndex]} 
+                    alt={outfit.title || outfit.name}
+                    className={styles.mainImage}
+                  />
+                  {outfit.images.length > 1 && (
+                    <div className={styles.imageNavigation}>
+                      <button 
+                        onClick={() => setCurrentImageIndex(prev => 
+                          prev === 0 ? outfit.images.length - 1 : prev - 1
+                        )}
+                        className={styles.imageNavButton}
+                      >
+                        ‹
+                      </button>
+                      <div className={styles.imageIndicators}>
+                        {outfit.images.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentImageIndex(index)}
+                            className={`${styles.imageIndicator} ${
+                              index === currentImageIndex ? styles.active : ''
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <button 
+                        onClick={() => setCurrentImageIndex(prev => 
+                          prev === outfit.images.length - 1 ? 0 : prev + 1
+                        )}
+                        className={styles.imageNavButton}
+                      >
+                        ›
+                      </button>
+                    </div>
+                  )}
+                </>
               ) : (
                 <div className={styles.imagePlaceholder}>
                   <span className={styles.outfitEmoji}>👕</span>

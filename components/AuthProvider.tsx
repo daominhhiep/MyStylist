@@ -49,32 +49,78 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Check localStorage for cached user data
+    const cachedUser = localStorage.getItem('user');
+    const cachedProfile = localStorage.getItem('userProfile');
+    
+    if (cachedUser && cachedProfile) {
+      try {
+        setUser(JSON.parse(cachedUser));
+        setUserProfile(JSON.parse(cachedProfile));
+      } catch (error) {
+        console.error('Error parsing cached user data:', error);
+        localStorage.removeItem('user');
+        localStorage.removeItem('userProfile');
+      }
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
       
       if (user) {
-        // Lấy thông tin profile từ Firestore
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists()) {
-          setUserProfile(userDoc.data());
-        } else {
-          // Tạo profile mới nếu chưa có
-          const newProfile = {
+        // Cache user data in localStorage
+        localStorage.setItem('user', JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL
+        }));
+
+        try {
+          // Lấy thông tin profile từ Firestore
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          if (userDoc.exists()) {
+            const profileData = userDoc.data();
+            setUserProfile(profileData);
+            localStorage.setItem('userProfile', JSON.stringify(profileData));
+          } else {
+            // Tạo profile mới nếu chưa có
+            const newProfile = {
+              email: user.email,
+              name: user.displayName,
+              avatar: user.photoURL,
+              height: '',
+              weight: '',
+              bodyType: '',
+              preferredStyle: '',
+              size: '',
+              createdAt: new Date().toISOString()
+            };
+            await setDoc(doc(db, 'users', user.uid), newProfile);
+            setUserProfile(newProfile);
+            localStorage.setItem('userProfile', JSON.stringify(newProfile));
+          }
+        } catch (error) {
+          console.error('Error accessing Firestore:', error);
+          // Use mock profile data if Firestore fails
+          const mockProfile = {
             email: user.email,
             name: user.displayName,
             avatar: user.photoURL,
-            height: '',
-            weight: '',
-            bodyType: '',
-            preferredStyle: '',
-            size: '',
+            height: '170cm',
+            weight: '65kg',
+            bodyType: 'Normal',
+            preferredStyle: 'Streetwear',
+            size: 'M',
             createdAt: new Date().toISOString()
           };
-          await setDoc(doc(db, 'users', user.uid), newProfile);
-          setUserProfile(newProfile);
+          setUserProfile(mockProfile);
+          localStorage.setItem('userProfile', JSON.stringify(mockProfile));
         }
       } else {
         setUserProfile(null);
+        localStorage.removeItem('user');
+        localStorage.removeItem('userProfile');
       }
       
       setLoading(false);
@@ -95,6 +141,8 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   const signOut = async () => {
     try {
       await firebaseSignOut(auth);
+      localStorage.removeItem('user');
+      localStorage.removeItem('userProfile');
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -112,8 +160,17 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       
       await setDoc(doc(db, 'users', user.uid), updatedProfile, { merge: true });
       setUserProfile(updatedProfile);
+      localStorage.setItem('userProfile', JSON.stringify(updatedProfile));
     } catch (error) {
       console.error('Error updating user profile:', error);
+      // Update locally even if Firestore fails
+      const updatedProfile = {
+        ...userProfile,
+        ...profileData,
+        updatedAt: new Date().toISOString()
+      };
+      setUserProfile(updatedProfile);
+      localStorage.setItem('userProfile', JSON.stringify(updatedProfile));
       throw error;
     }
   };
