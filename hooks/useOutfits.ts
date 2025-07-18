@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { getOutfits, Outfit } from '../lib/firestore';
 import { DocumentSnapshot } from 'firebase/firestore';
@@ -20,20 +19,20 @@ export const useOutfits = () => {
 
       const docToUse = reset ? null : lastDoc;
       const { outfits: newOutfits, lastDoc: newLastDoc } = await getOutfits(12, docToUse || undefined);
-      
+
       if (reset) {
         setOutfits(newOutfits);
       } else {
         setOutfits(prev => [...prev, ...newOutfits]);
       }
-      
+
       setLastDoc(newLastDoc);
       setHasMore(newOutfits.length === 12);
       setUsingMockData(false);
-      
+
     } catch (error) {
       console.error('Error loading outfits:', error);
-      
+
       // Fallback to mock data
       if (reset) {
         console.log('Using mock data as fallback');
@@ -45,7 +44,7 @@ export const useOutfits = () => {
         setUsingMockData(true);
         setHasMore(endIndex < outfits_mock.length);
       }
-      
+
       setError('Failed to load outfits from database, using sample data');
     } finally {
       setLoading(false);
@@ -60,7 +59,7 @@ export const useOutfits = () => {
       const nextPage = currentPage + 1;
       const startIndex = nextPage * pageSize;
       const endIndex = Math.min(startIndex + pageSize, outfits_mock.length);
-      
+
       if (startIndex < outfits_mock.length) {
         setOutfits(prev => [...prev, ...outfits_mock.slice(startIndex, endIndex)]);
         setCurrentPage(nextPage);

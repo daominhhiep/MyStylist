@@ -1004,11 +1004,6 @@ export const outfits_mock: MockOutfit[] = [
   }
 ];
 
-// Helper function to get item by ID
-export const getItemById = (id: string): MockOutfitItem | undefined => {
-  return items_mock.find(item => item.id === id);
-};
-
 // Helper function to get outfit by ID
 export const getOutfitById = (id: string): MockOutfit | undefined => {
   return outfits_mock.find(outfit => outfit.id === id);
@@ -1017,13 +1012,4 @@ export const getOutfitById = (id: string): MockOutfit | undefined => {
 // Helper function to get outfits by style
 export const getOutfitsByStyle = (style: string): MockOutfit[] => {
   return outfits_mock.filter(outfit => outfit.style.toLowerCase() === style.toLowerCase());
-};
-
-// Legacy exports for backward compatibility
-export { outfits_mock as outfits_mock_legacy };
-export { items_mock as items_mock_legacy };
-
-// Individual item getter for backward compatibility
-export const item_mock = (id: string): MockOutfitItem | undefined => {
-  return getItemById(id);
 };

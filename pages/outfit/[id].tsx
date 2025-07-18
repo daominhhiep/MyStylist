@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -11,7 +12,6 @@ const OutfitDetail = () => {
   const router = useRouter();
   const { id } = router.query;
   const { t } = useTranslation();
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [outfit, setOutfit] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -22,16 +22,22 @@ const OutfitDetail = () => {
         const outfitData = await getOutfitById(id as string);
         if (outfitData) {
           setOutfit(outfitData);
+          // Increment views
+          try {
+            await incrementOutfitViews(id as string);
+          } catch (error) {
+            console.log('Could not increment views, using mock data');
+          }
         } else {
           // If no data from Firestore, fallback to mock data
           const mockOutfit = getMockOutfitById(id as string);
-          setOutfit(mockOutfit);
+          setOutfit(mockOutfit || null);
         }
       } catch (error) {
         console.error("Error fetching from Firestore:", error);
         // Fallback to mock data in case of error
         const mockOutfit = getMockOutfitById(id as string);
-        setOutfit(mockOutfit);
+        setOutfit(mockOutfit || null);
       } finally {
         setLoading(false);
       }
@@ -42,143 +48,138 @@ const OutfitDetail = () => {
     }
   }, [id]);
 
+  const handleShareOutfit = async () => {
+    try {
+      await incrementOutfitClicks(id as string);
+    } catch (error) {
+      console.log('Could not increment clicks');
+    }
+    
+    if (navigator.share) {
+      navigator.share({
+        title: outfit?.title || outfit?.name,
+        text: outfit?.description,
+        url: window.location.href,
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={styles.container}>
+        <div className={styles.loading}>Loading...</div>
+      </div>
+    );
   }
 
   if (!outfit) {
-    return <div>Outfit not found</div>;
+    return (
+      <div className={styles.container}>
+        <div className={styles.notFound}>Outfit not found</div>
+      </div>
+    );
   }
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>{outfit.name} - MyStylist</title>
+        <title>{outfit.title || outfit.name} - MyStylist</title>
         <meta name="description" content={outfit.description} />
       </Head>
+
+      <header className={styles.header}>
+        <button onClick={() => router.back()} className={styles.backButton}>
+          ← {(outfit.style || '').toUpperCase()}
+        </button>
+        {(outfit.isHot || outfit.isSponsored || outfit.isTrending) && (
+          <div className={styles.badge}>
+            {outfit.isHot && <span className={styles.hotBadge}>HOT</span>}
+            {outfit.isSponsored && <span className={styles.sponsoredBadge}>SPONSORED</span>}
+            {outfit.isTrending && <span className={styles.trendingBadge}>TRENDING</span>}
+          </div>
+        )}
+      </header>
 
       <main className={styles.main}>
         <div className={styles.outfitLayout}>
           <div className={styles.imageSection}>
-            <div className={styles.mainImage}>
+            <div className={styles.mainImageContainer}>
               {outfit.images && outfit.images.length > 0 ? (
                 <img 
-                  src={outfit.images[currentImageIndex]} 
-                  alt={outfit.name}
-                  className={styles.image}
+                  src={outfit.images[0]} 
+                  alt={outfit.title || outfit.name}
+                  className={styles.mainImage}
                 />
               ) : (
-                <span className={styles.outfitEmoji}>👕</span>
+                <div className={styles.imagePlaceholder}>
+                  <span className={styles.outfitEmoji}>👕</span>
+                </div>
               )}
             </div>
-            {outfit.images && outfit.images.length > 1 && (
-              <div className={styles.thumbnails}>
-                {outfit.images.map((image, index) => (
-                  <img 
-                    key={index}
-                    src={image}
-                    alt={`${outfit.name} ${index + 1}`}
-                    className={`${styles.thumbnail} ${index === currentImageIndex ? styles.activeThumbnail : ''}`}
-                    onClick={() => setCurrentImageIndex(index)}
-                  />
-                ))}
-              </div>
-            )}
           </div>
 
           <div className={styles.detailsSection}>
-            <div className={styles.outfitInfo}>
-              <h1 className={styles.outfitTitle}>{outfit.name || outfit.title}</h1>
-              {outfit.rating && outfit.reviews && (
-                <div className={styles.rating}>
-                  <span className={styles.stars}>⭐⭐⭐⭐⭐</span>
-                  <span className={styles.ratingText}>
-                    {outfit.rating} ({outfit.reviews} reviews)
-                  </span>
-                </div>
-              )}
-              <p className={styles.description}>{outfit.description}</p>
-              {outfit.modelSpecs && (
-                <div className={styles.modelSpecs}>
-                  <h3>{t('outfit.modelSpecs')}</h3>
-                  <div className={styles.specsGrid}>
-                    <div className={styles.specItem}>
-                      <span className={styles.specLabel}>{t('outfit.height')}:</span>
-                      <span className={styles.specValue}>{outfit.modelSpecs.height}</span>
-                    </div>
-                    <div className={styles.specItem}>
-                      <span className={styles.specLabel}>{t('outfit.weight')}:</span>
-                      <span className={styles.specValue}>{outfit.modelSpecs.weight}</span>
-                    </div>
-                    <div className={styles.specItem}>
-                      <span className={styles.specLabel}>Vòng ngực:</span>
-                      <span className={styles.specValue}>{outfit.modelSpecs.chest}</span>
-                    </div>
-                    <div className={styles.specItem}>
-                      <span className={styles.specLabel}>Vòng eo:</span>
-                      <span className={styles.specValue}>{outfit.modelSpecs.waist}</span>
-                    </div>
-                    <div className={styles.specItem}>
-                      <span className={styles.specLabel}>Vòng hông:</span>
-                      <span className={styles.specValue}>{outfit.modelSpecs.hips}</span>
-                    </div>
-                    <div className={styles.specItem}>
-                      <span className={styles.specLabel}>{t('outfit.size')}:</span>
-                      <span className={styles.specValue}>{outfit.modelSpecs.size}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
+            <div className={styles.outfitHeader}>
+              <h1 className={styles.outfitTitle}>OUTFIT ITEMS</h1>
             </div>
 
-            <div className={styles.itemBreakdown}>
-              <h3>{t('outfit.itemBreakdown')}</h3>
-              <div className={styles.items}>
-                {outfit.items.map((item, index) => (
-                  <div key={index} className={styles.item}>
-                    <Link href={`/item/${item.id}`}>
-                      <div className={styles.itemImage}>
-                        <span className={styles.itemIcon}>👕</span>
-                      </div>
-                    </Link>
-                    <div className={styles.itemDetails}>
-                      <Link href={`/item/${item.id}`} className={styles.itemNameLink}>
-                        <span className={styles.itemName}>{item.name}</span>
-                      </Link>
-                      <span className={styles.itemBrand}>{item.brand}</span>
-                      <span className={styles.itemPrice}>{item.price}</span>
-                    </div>
-                    <div className={styles.itemActions}>
+            <div className={styles.itemsList}>
+              {outfit.items && outfit.items.map((item, index) => (
+                <div key={index} className={styles.itemRow}>
+                  <div className={styles.itemInfo}>
+                    <h3 className={styles.itemName}>{item.name}</h3>
+                    <p className={styles.itemDescription}>{item.description || item.brand}</p>
+                  </div>
+                  <div className={styles.itemActions}>
+                    {item.shopeeLink && (
                       <a 
-                        href={item.shopeeLink || '#'} 
+                        href={item.shopeeLink} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className={styles.shopeeButton}
+                        onClick={handleShareOutfit}
                       >
-                        Shopee
+                        SHOPEE
                       </a>
+                    )}
+                    {item.tiktokLink && (
                       <a 
-                        href={item.tiktokLink || '#'} 
+                        href={item.tiktokLink} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className={styles.tiktokButton}
+                        onClick={handleShareOutfit}
                       >
-                        TikTok
+                        TIKTOK
                       </a>
-                    </div>
+                    )}
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <div className={styles.tags}>
-              {outfit.tags.map((tag, index) => (
-                <span key={index} className={styles.tag}>
-                  #{tag}
-                </span>
+                </div>
               ))}
             </div>
+
+            {outfit.modelSpecs && (
+              <div className={styles.modelInfo}>
+                <h3 className={styles.modelTitle}>MODEL INFO</h3>
+                <div className={styles.modelStats}>
+                  <div className={styles.modelStat}>
+                    <span className={styles.statLabel}>Height:</span>
+                    <span className={styles.statValue}>{outfit.modelSpecs.height}</span>
+                  </div>
+                  <div className={styles.modelStat}>
+                    <span className={styles.statLabel}>Weight:</span>
+                    <span className={styles.statValue}>{outfit.modelSpecs.weight}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <button onClick={handleShareOutfit} className={styles.shareButton}>
+              🔗 SHARE OUTFIT
+            </button>
           </div>
         </div>
       </main>

@@ -182,11 +182,13 @@ export const incrementOutfitViews = async (outfitId: string): Promise<void> => {
     const outfitSnap = await getDoc(outfitRef);
     
     if (outfitSnap.exists()) {
-      const currentViews = outfitSnap.data().views || 0;
+      const data = outfitSnap.data();
+      const currentViews = data?.views || 0;
       await updateDoc(outfitRef, { views: currentViews + 1 });
     }
   } catch (error) {
     console.error('Error incrementing views:', error);
+    throw error; // Re-throw to allow fallback handling
   }
 };
 
@@ -196,10 +198,12 @@ export const incrementOutfitClicks = async (outfitId: string): Promise<void> => 
     const outfitSnap = await getDoc(outfitRef);
     
     if (outfitSnap.exists()) {
-      const currentClicks = outfitSnap.data().clicks || 0;
+      const data = outfitSnap.data();
+      const currentClicks = data?.clicks || 0;
       await updateDoc(outfitRef, { clicks: currentClicks + 1 });
     }
   } catch (error) {
     console.error('Error incrementing clicks:', error);
+    throw error; // Re-throw to allow fallback handling
   }
 };
