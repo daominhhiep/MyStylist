@@ -63,15 +63,9 @@ const OutfitDetail = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{outfit.name} - OutfitAI</title>
+        <title>{outfit.name} - MyStylist</title>
         <meta name="description" content={outfit.description} />
       </Head>
-
-      <header className={styles.header}>
-        <Link href="/">
-          <button className={styles.backButton}>← Về trang chủ</button>
-        </Link>
-      </header>
 
       <main className={styles.main}>
         <div className={styles.outfitLayout}>
@@ -127,17 +121,6 @@ const OutfitDetail = () => {
                   </div>
                 </div>
               </div>
-            </div>
-
-
-
-            <div className={styles.actions}>
-              <Link href="/try-on">
-                <button className={styles.addToWardrobeButton}>
-                 {t('outfit.addToWardrobe')}
-                </button>
-              </Link>
-              <button className={styles.shareButton}>{t('outfit.share')}</button>
             </div>
 
             <div className={styles.itemBreakdown}>

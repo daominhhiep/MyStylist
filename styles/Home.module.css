@@ -28,6 +28,10 @@
   padding: 0 1.5rem;
 }
 
+.link {
+  text-decoration: none;
+}
+
 .logo {
   font-family: 'Playfair Display', serif;
   font-size: 2rem;

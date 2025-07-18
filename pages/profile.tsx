@@ -1,61 +1,81 @@
 
-import { useState, useEffect } from 'react'
-import { useSession, signOut } from 'next-auth/react'
-import { useRouter } from 'next/router'
-import Head from 'next/head'
-import Link from 'next/link'
-import styles from '../styles/Auth.module.css'
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { doc, updateDoc } from 'firebase/firestore';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useAuth } from '../components/AuthProvider';
+import { db } from '../lib/firebase';
+import styles from '../styles/Auth.module.css';
 
 export default function Profile() {
-  const { data: session, status } = useSession()
-  const router = useRouter()
-  const [userProfile, setUserProfile] = useState({
+  const { user, userProfile, signOut, loading } = useAuth();
+  const router = useRouter();
+  const [formData, setFormData] = useState({
     height: '',
     weight: '',
     bodyType: '',
     preferredStyle: '',
     size: ''
-  })
+  });
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/auth/signin')
+    if (!loading && !user) {
+      router.push('/auth/signin');
     }
-  }, [status, router])
+  }, [user, loading, router]);
 
   useEffect(() => {
-    // Load user profile from localStorage
-    const savedProfile = localStorage.getItem('userProfile')
-    if (savedProfile) {
-      setUserProfile(JSON.parse(savedProfile))
+    if (userProfile) {
+      setFormData({
+        height: userProfile.height || '',
+        weight: userProfile.weight || '',
+        bodyType: userProfile.bodyType || '',
+        preferredStyle: userProfile.preferredStyle || '',
+        size: userProfile.size || ''
+      });
     }
-  }, [])
+  }, [userProfile]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setUserProfile(prev => ({
+    const { name, value } = e.target;
+    setFormData(prev => ({
       ...prev,
       [name]: value
-    }))
+    }));
+  };
+
+  const handleSave = async () => {
+    if (!user) return;
+
+    setSaving(true);
+    try {
+      await updateDoc(doc(db, 'users', user.uid), {
+        ...formData,
+        updatedAt: new Date().toISOString()
+      });
+      alert('Thông tin đã được lưu thành công!');
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('Có lỗi xảy ra khi lưu thông tin!');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return <div>Đang tải...</div>;
   }
 
-  const handleSave = () => {
-    localStorage.setItem('userProfile', JSON.stringify(userProfile))
-    alert('Thông tin đã được lưu thành công!')
-  }
-
-  if (status === 'loading') {
-    return <div>Đang tải...</div>
-  }
-
-  if (!session) {
-    return null
+  if (!user) {
+    return null;
   }
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Thông tin cá nhân - OutfitAI</title>
+        <title>Thông tin cá nhân - MyStylist</title>
         <meta name="description" content="Quản lý thông tin cá nhân" />
       </Head>
 
@@ -70,16 +90,16 @@ export default function Profile() {
 
         <div className={styles.userInfo}>
           <img 
-            src={session.user?.image || '/default-avatar.png'} 
+            src={user.photoURL || '/default-avatar.png'} 
             alt="Avatar"
             className={styles.userAvatar}
           />
           <div className={styles.userDetails}>
-            <div className={styles.userName}>{session.user?.name}</div>
-            <div className={styles.userEmail}>{session.user?.email}</div>
+            <div className={styles.userName}>{user.displayName}</div>
+            <div className={styles.userEmail}>{user.email}</div>
           </div>
           <button 
-            onClick={() => signOut({ callbackUrl: '/' })}
+            onClick={signOut}
             className={styles.signOutButton}
           >
             Đăng xuất
@@ -94,9 +114,9 @@ export default function Profile() {
                 type="number"
                 id="height"
                 name="height"
-                value={userProfile.height}
+                value={formData.height}
                 onChange={handleInputChange}
-                placeholder="Ví dụ: 170"
+                placeholder="Nhập chiều cao"
               />
             </div>
 
@@ -106,9 +126,9 @@ export default function Profile() {
                 type="number"
                 id="weight"
                 name="weight"
-                value={userProfile.weight}
+                value={formData.weight}
                 onChange={handleInputChange}
-                placeholder="Ví dụ: 65"
+                placeholder="Nhập cân nặng"
               />
             </div>
 
@@ -117,23 +137,40 @@ export default function Profile() {
               <select
                 id="bodyType"
                 name="bodyType"
-                value={userProfile.bodyType}
+                value={formData.bodyType}
                 onChange={handleInputChange}
               >
                 <option value="">Chọn vóc dáng</option>
                 <option value="slim">Gầy</option>
+                <option value="athletic">Thể thao</option>
                 <option value="average">Trung bình</option>
                 <option value="curvy">Đầy đặn</option>
-                <option value="athletic">Thể thao</option>
               </select>
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="size">Size thường mặc</label>
+              <label htmlFor="preferredStyle">Phong cách yêu thích</label>
+              <select
+                id="preferredStyle"
+                name="preferredStyle"
+                value={formData.preferredStyle}
+                onChange={handleInputChange}
+              >
+                <option value="">Chọn phong cách</option>
+                <option value="casual">Casual</option>
+                <option value="formal">Formal</option>
+                <option value="streetwear">Streetwear</option>
+                <option value="vintage">Vintage</option>
+                <option value="minimalist">Minimalist</option>
+              </select>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="size">Kích thước</label>
               <select
                 id="size"
                 name="size"
-                value={userProfile.size}
+                value={formData.size}
                 onChange={handleInputChange}
               >
                 <option value="">Chọn size</option>
@@ -145,31 +182,17 @@ export default function Profile() {
                 <option value="XXL">XXL</option>
               </select>
             </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="preferredStyle">Phong cách yêu thích</label>
-              <select
-                id="preferredStyle"
-                name="preferredStyle"
-                value={userProfile.preferredStyle}
-                onChange={handleInputChange}
-              >
-                <option value="">Chọn phong cách</option>
-                <option value="casual">Casual</option>
-                <option value="formal">Formal</option>
-                <option value="streetwear">Streetwear</option>
-                <option value="vintage">Vintage</option>
-                <option value="minimalist">Minimalist</option>
-                <option value="bohemian">Bohemian</option>
-              </select>
-            </div>
           </div>
 
-          <button onClick={handleSave} className={styles.saveButton}>
-            Lưu thông tin
+          <button 
+            onClick={handleSave}
+            className={styles.saveButton}
+            disabled={saving}
+          >
+            {saving ? 'Đang lưu...' : 'Lưu thông tin'}
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }

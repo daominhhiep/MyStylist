@@ -83,12 +83,12 @@ const AdminDashboard = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Admin Dashboard - OutfitAI</title>
+        <title>Admin Dashboard</title>
       </Head>
 
       <header className={styles.header}>
         <div className={styles.headerTop}>
-          <h1>👗 OutfitAI Admin</h1>
+          <h1>👗 Admin</h1>
           <Link href="/">
             <button className={styles.backButton}>← Về trang chủ</button>
           </Link>

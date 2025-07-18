@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../../styles/Item.module.css';
+import {item_mock} from "../../mock/data";
 
 const ItemDetail = () => {
   const router = useRouter();
@@ -11,73 +12,14 @@ const ItemDetail = () => {
   const [selectedColor, setSelectedColor] = useState('default');
 
   // Mock data - trong thực tế sẽ fetch từ API
-  const item = {
-    id: id,
-    name: 'Denim Jacket',
-    brand: 'Urban Style',
-    description: 'Classic denim jacket với thiết kế vintage, phù hợp cho mọi phong cách từ casual đến streetwear.',
-    price: '$45',
-    originalPrice: '$65',
-    rating: 4.6,
-    reviews: 89,
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    colors: [
-      { name: 'default', label: 'Light Blue', color: '#4169E1' },
-      { name: 'dark', label: 'Dark Blue', color: '#1e3a8a' },
-      { name: 'black', label: 'Black', color: '#000000' }
-    ],
-    features: [
-      'Chất liệu: 100% Cotton',
-      'Thiết kế: Classic fit',
-      'Xuất xứ: Vietnam',
-      'Dễ dàng mix & match'
-    ],
-    shopeeLink: 'https://shopee.vn/jacket-123',
-    tiktokLink: 'https://shop.tiktok.com/jacket-123',
-    tags: ['denim', 'vintage', 'casual', 'unisex']
-  };
+  const item = item_mock(id[0])
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>{item.name} - {item.brand} - OutfitAI</title>
+        <title>{item.name} - {item.brand} - MyStylist</title>
         <meta name="description" content={item.description} />
       </Head>
-
-      <header className={styles.header}>
-        <div className={styles.headerTop}>
-          <Link href="/" className={styles.backButton}>
-            ← Về trang chủ
-          </Link>
-          <h1 className={styles.logo}>👗 OutfitAI</h1>
-
-          <div className={styles.headerActions}>
-            {session ? (
-              <Link href="/profile" className={styles.profileButton}>
-                <img 
-                  src={session.user?.image || '/default-avatar.png'} 
-                  alt="Profile"
-                  className={styles.profileAvatar}
-                />
-                {session.user?.name}
-              </Link>
-            ) : (
-              <Link href="/auth/signin" className={styles.loginButton}>
-                Đăng nhập
-              </Link>
-            )}
-          </div>
-
-          <div className={styles.mobileOnlyActions}>
-            <button 
-              className={styles.hamburger}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              ☰
-            </button>
-          </div>
-        </div>
-      </header>
 
       <main className={styles.main}>
         <div className={styles.itemLayout}>
