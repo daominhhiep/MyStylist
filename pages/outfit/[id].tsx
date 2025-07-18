@@ -85,24 +85,6 @@ const OutfitDetail = () => {
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>{outfit.title || outfit.name} - MyStylist</title>
-        <meta name="description" content={outfit.description} />
-      </Head>
-
-      <header className={styles.header}>
-        <button onClick={() => router.back()} className={styles.backButton}>
-          ← {(outfit.style || '').toUpperCase()}
-        </button>
-        {(outfit.isHot || outfit.isSponsored || outfit.isTrending) && (
-          <div className={styles.badge}>
-            {outfit.isHot && <span className={styles.hotBadge}>HOT</span>}
-            {outfit.isSponsored && <span className={styles.sponsoredBadge}>SPONSORED</span>}
-            {outfit.isTrending && <span className={styles.trendingBadge}>TRENDING</span>}
-          </div>
-        )}
-      </header>
-
       <main className={styles.main}>
         <div className={styles.outfitLayout}>
           <div className={styles.imageSection}>
