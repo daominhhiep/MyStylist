@@ -10,15 +10,36 @@ import {
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
 
+interface UserProfile {
+  email: string;
+  name: string;
+  avatar: string;
+  height: string;
+  weight: string;
+  bodyType: string;
+  preferredStyle: string;
+  size: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
 interface AuthContextType {
   user: User | null;
-  userProfile: any;
+  userProfile: UserProfile | null;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
+  updateUserProfile: (profileData: Partial<UserProfile>) => Promise<void>;
   loading: boolean;
 }
 
-const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  userProfile: null,
+  signInWithGoogle: async () => {},
+  signOut: async () => {},
+  updateUserProfile: async () => {},
+  loading: true
+});
 
 export const useAuth = () => useContext(AuthContext);
 
@@ -79,11 +100,30 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     }
   };
 
+  const updateUserProfile = async (profileData: Partial<UserProfile>) => {
+    if (!user) return;
+    
+    try {
+      const updatedProfile = {
+        ...userProfile,
+        ...profileData,
+        updatedAt: new Date().toISOString()
+      };
+      
+      await setDoc(doc(db, 'users', user.uid), updatedProfile, { merge: true });
+      setUserProfile(updatedProfile);
+    } catch (error) {
+      console.error('Error updating user profile:', error);
+      throw error;
+    }
+  };
+
   const value = {
     user,
     userProfile,
     signInWithGoogle,
     signOut,
+    updateUserProfile,
     loading
   };
 
