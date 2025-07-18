@@ -7,6 +7,7 @@ import {LanguageSwitcher} from '../components/LanguageSwitcher';
 import { useAuth } from '../components/AuthProvider';
 import { useOutfits } from '../hooks/useOutfits';
 import Navbar from "../components/NavBar";
+import { incrementOutfitClicks } from '../lib/firestore';
 
 const Home: NextPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

@@ -40,6 +40,8 @@ export interface Outfit {
   isHot?: boolean;
   isSponsored?: boolean;
   isTrending?: boolean;
+  views?: number;
+  clicks?: number;
 }
 
 // Outfit functions
@@ -170,5 +172,34 @@ export const getItems = async (): Promise<OutfitItem[]> => {
   } catch (error) {
     console.error('Error getting items:', error);
     throw error;
+  }
+};
+
+// Analytics functions
+export const incrementOutfitViews = async (outfitId: string): Promise<void> => {
+  try {
+    const outfitRef = doc(db, 'outfits', outfitId);
+    const outfitSnap = await getDoc(outfitRef);
+    
+    if (outfitSnap.exists()) {
+      const currentViews = outfitSnap.data().views || 0;
+      await updateDoc(outfitRef, { views: currentViews + 1 });
+    }
+  } catch (error) {
+    console.error('Error incrementing views:', error);
+  }
+};
+
+export const incrementOutfitClicks = async (outfitId: string): Promise<void> => {
+  try {
+    const outfitRef = doc(db, 'outfits', outfitId);
+    const outfitSnap = await getDoc(outfitRef);
+    
+    if (outfitSnap.exists()) {
+      const currentClicks = outfitSnap.data().clicks || 0;
+      await updateDoc(outfitRef, { clicks: currentClicks + 1 });
+    }
+  } catch (error) {
+    console.error('Error incrementing clicks:', error);
   }
 };

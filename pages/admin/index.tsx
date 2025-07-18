@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -99,13 +98,13 @@ const AdminDashboard = () => {
 
     try {
       setUploading(true);
-      
+
       // Create temporary outfit ID for image upload
       const tempOutfitId = Date.now().toString();
-      
+
       // Upload images to Firebase Storage
       const imageUrls = await uploadOutfitImages(selectedImages, tempOutfitId);
-      
+
       // Prepare outfit data
       const outfitData = {
         title: newOutfit.title,
@@ -126,7 +125,7 @@ const AdminDashboard = () => {
 
       // Save to Firestore
       await createOutfit(outfitData);
-      
+
       // Reset form
       setNewOutfit({
         title: '',
@@ -150,7 +149,7 @@ const AdminDashboard = () => {
       // Reload outfits
       await loadOutfits();
       alert('Outfit created successfully!');
-      
+
     } catch (error) {
       console.error('Error creating outfit:', error);
       alert('Error creating outfit');

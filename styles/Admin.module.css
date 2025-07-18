@@ -1,647 +1,338 @@
-/* Minimal Monochrome Admin Design */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
-
 .container {
   min-height: 100vh;
-  background: #FFFFFF;
-  color: #111111;
-  font-family: 'Inter', sans-serif;
-  padding: 0;
+  background: #f8f9fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .header {
-  background: #FFFFFF;
-  border-bottom: 1px solid #EEEEEE;
-  padding: 1rem 0;
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+  padding: 1rem 2rem;
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.headerTop {
+.headerContent {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 1rem;
 }
 
-.header h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
+.title {
+  font-size: 1.5rem;
   font-weight: 600;
+  color: #212529;
   margin: 0;
-  color: #111111;
-  letter-spacing: 0.15em;
 }
 
-.backButton {
-  background: transparent;
-  border: 1px solid #111111;
-  color: #111111;
-  padding: 0.6rem 1.5rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  text-decoration: none;
-}
-
-.backButton:hover {
-  background: #111111;
-  color: #FFFFFF;
-  transform: translateY(-1px);
+.headerActions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .main {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 1rem;
+  padding: 2rem;
 }
 
-.uploadSection {
-  background: #FAFAFA;
-  border: 1px solid #EEEEEE;
-  padding: 2.5rem;
-  margin-bottom: 3rem;
+.section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+  overflow: hidden;
 }
 
-.uploadSection h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin: 0 0 2rem 0;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  text-align: center;
+.sectionHeader {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e9ecef;
+  background: #f8f9fa;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #212529;
+  margin: 0 0 0.5rem 0;
+}
+
+.sectionDescription {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.sectionContent {
+  padding: 2rem;
 }
 
 .form {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-.input, .select {
-  padding: 1rem;
-  border: 1px solid #EEEEEE;
-  background: #FFFFFF;
-  color: #111111;
-  font-size: 0.9rem;
-  font-family: 'Inter', sans-serif;
-  transition: all 0.3s ease;
-}
-
-.input:focus, .select:focus {
-  outline: none;
-  border-color: #111111;
-}
-
-.input::placeholder {
-  color: #AAAAAA;
-  font-style: italic;
-}
-
-.addButton {
-  background: #111111;
-  border: none;
-  color: #FFFFFF;
-  padding: 1rem 2rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  grid-column: 1 / -1;
-  font-family: 'Inter', sans-serif;
-}
-
-.addButton:hover {
-  background: #333333;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.statsSection h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin: 0 0 2rem 0;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  text-align: center;
-}
-
-.productGrid {
+.formRow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
-.productCard {
-  background: #FFFFFF;
-  border: 1px solid #EEEEEE;
-  padding: 2rem;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.productCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border-color: #111111;
-}
-
-.productHeader {
+.formGroup {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #EEEEEE;
-}
-
-.productHeader h3 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  flex: 1;
-  color: #111111;
+  flex-direction: column;
 }
 
 .label {
-  background: #111111;
-  color: #FFFFFF;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   font-weight: 500;
-  margin-left: 1rem;
-}
-
-.productInfo {
-  margin: 0 0 1.5rem 0;
-  color: #666666;
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.stats {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding: 1rem 0;
-  border-top: 1px solid #EEEEEE;
-  border-bottom: 1px solid #EEEEEE;
-}
-
-.clicks {
-  font-weight: 600;
-  color: #111111;
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
-}
-
-.linkButton {
-  background: transparent;
-  border: 1px solid #EEEEEE;
-  color: #111111;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-/* Minimal Monochrome Admin Design */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
-
-.container {
-  min-height: 100vh;
-  background: #FFFFFF;
-  color: #111111;
-  font-family: 'Inter', sans-serif;
-}
-
-.header {
-  background: #FFFFFF;
-  border-bottom: 1px solid #EEEEEE;
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(10px);
-}
-
-.headerTop {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1rem;
-}
-
-.header h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin: 0;
-  color: #111111;
-  letter-spacing: 0.15em;
-}
-
-.main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 1rem;
-}
-
-.uploadSection {
-  background: #FAFAFA;
-  padding: 2rem;
-  margin-bottom: 3rem;
-  border: 1px solid #EEEEEE;
-}
-
-.uploadSection h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-}
-
-.form {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.input, .select, .textarea {
-  padding: 0.8rem;
-  border: 1px solid #EEEEEE;
-  background: #FFFFFF;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  color: #111111;
-}
-
-.input:focus, .select:focus, .textarea:focus {
-  outline: none;
-  border-color: #111111;
-}
-
-.addButton {
-  background: #111111;
-  color: #FFFFFF;
-  border: none;
-  padding: 0.8rem 2rem;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-}
-
-.addButton:hover {
-  background: #333333;
-  transform: translateY(-1px);
-}
-
-.productGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-.productCard {
-  background: #FFFFFF;
-  border: 1px solid #EEEEEE;
-  padding: 2rem;
-  transition: all 0.3s ease;
-}
-
-.productCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.productName {
-  font-size: 1rem;
-  font-weight: 600;
+  color: #374151;
   margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 0.9rem;
 }
 
-.productCategory {
-  font-size: 0.8rem;
-  color: #666666;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 1rem;
+.input, .textarea, .select {
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.productPrice {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+.input:focus, .textarea:focus, .select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.productLabel {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-
-.labelHot {
-  background: #FF4444;
-  color: #FFFFFF;
-}
-
-.labelSponsored {
-  background: #FFD700;
-  color: #111111;
-}
-
-.labelTrending {
-  background: #00AA44;
-  color: #FFFFFF;
-}
-
-.stats {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 1rem;
-  align-items: center;
-}
-
-.stat {
-  font-size: 0.8rem;
-  color: #666666;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.cardActions {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.linkButton {
-  background: transparent;
-  border: 1px solid #111111;
-  color: #111111;
-  padding: 0.6rem 1.5rem;
-  cursor: pointer;
-  flex: 1;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  text-align: center;
-  font-family: 'Inter', sans-serif;
-}
-
-.linkButton:hover {
-  background: #111111;
-  color: #FFFFFF;
-  border-color: #111111;
-}
-
-.deleteButton {
-  background: #FF4444;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-size: 0.8rem;
+.textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
 .checkboxGroup {
   display: flex;
   gap: 1rem;
-  margin: 1rem 0;
+  flex-wrap: wrap;
 }
 
-.checkboxGroup label {
+.checkboxItem {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
+}
+
+.checkbox {
+  width: 1rem;
+  height: 1rem;
 }
 
 .imageUpload {
-  margin: 1rem 0;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
 }
 
-.imageUpload label {
-  display: block;
-  margin-bottom: 0.5rem;
+.imageUpload:hover {
+  border-color: #3b82f6;
+}
+
+.addButton {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.addButton:hover {
+  background: #2563eb;
+}
+
+.addButton:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.outfitGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.outfitCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.outfitCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.outfitImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.outfitInfo {
+  padding: 1rem;
+}
+
+.outfitTitle {
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+}
+
+.outfitMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.outfitStyle {
+  background: #f3f4f6;
+  color: #374151;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
   font-weight: 500;
 }
 
-.itemsSection {
-  border: 1px solid #ddd;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 4px;
-}
-
-.itemForm {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  border: 1px solid #eee;
-  border-radius: 4px;
-}
-
-.addItemButton {
-  background: #28a745;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  margin-top: 0.5rem;
-}
-
-.removeButton {
-  background: #dc3545;
-  color: white;
-  border: none;
-  padding: 0.25rem 0.5rem;
-  cursor: pointer;
+.outfitStats {
+  display: flex;
+  gap: 1rem;
   font-size: 0.8rem;
+  color: #6b7280;
 }
 
-.tags {
+.outfitTags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem;
-  margin: 0.5rem 0;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .tag {
-  background: #f0f0f0;
-  padding: 0.2rem 0.5rem;
-  border-radius: 12px;
-  font-size: 0.7rem;
-  color: #666;
+  background: #e5e7eb;
+  color: #374151;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
 }
 
-.actions {
+.hotTag {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.sponsoredTag {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.trendingTag {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.cardActions {
   display: flex;
   gap: 0.5rem;
-  margin-top: 1rem;
 }
 
-/* Hamburger menu for admin */
-.hamburger {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #111111;
+.editButton, .deleteButton {
+  flex: 1;
   padding: 0.5rem;
-  transition: all 0.3s ease;
-}
-
-.hamburger:hover {
-  color: #666666;
-}
-
-.nav {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-  margin-left: auto;
-  margin-right: 2rem;
-}
-
-.navButton {
-  background: transparent;
   border: none;
-  color: #111111;
+  border-radius: 6px;
   font-size: 0.8rem;
-  font-weight: 400;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  text-decoration: none;
-  padding: 0.4rem 0;
-  position: relative;
+  transition: background-color 0.2s;
 }
 
-.navButton:hover {
-  color: #666666;
-  transform: translateY(-1px);
+.editButton {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.editButton:hover {
+  background: #e5e7eb;
+}
+
+.deleteButton {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.deleteButton:hover {
+  background: #fecaca;
+}
+
+.status {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.statusError {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.statusWarning {
+  background: #fef3c7;
+  color: #d97706;
+  border: 1px solid #fed7aa;
 }
 
 @media (max-width: 768px) {
-  .form {
-    grid-template-columns: 1fr;
+  .container {
+    padding: 0;
   }
 
-  .headerTop {
-    position: relative;
-  }
-
-  .nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #FFFFFF;
-    border: 1px solid #EEEEEE;
-    border-top: none;
-    flex-direction: column;
+  .header {
     padding: 1rem;
+  }
+
+  .headerContent {
+    flex-direction: column;
     gap: 1rem;
-    z-index: 1000;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .nav.mobileMenuOpen {
-    display: flex;
-  }
-
-  .hamburger {
-    display: block;
-    margin-left: auto;
-  }
-
-  .navButton {
-    padding: 0.8rem 0;
-    border-bottom: 1px solid #EEEEEE;
-    text-align: center;
-    width: 100%;
-  }
-
-  .navButton:last-child {
-    border-bottom: none;
-  }
-
-  .header h1 {
-    font-size: 1.5rem;
-  }
-
-  .productGrid {
-    grid-template-columns: 1fr;
+    align-items: stretch;
   }
 
   .main {
-    padding: 2rem 1rem;
+    padding: 1rem;
   }
 
-  .uploadSection {
-    padding: 1.5rem;
-  }
-
-  .productCard {
-    padding: 1.5rem;
-  }
-
-  .stats {
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: flex-start;
-  }
-
-  .itemForm {
+  .formRow {
     grid-template-columns: 1fr;
   }
 
-  .checkboxGroup {
-    flex-direction: column;
-    gap: 0.5rem;
+  .outfitGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionContent {
+    padding: 1rem;
   }
 }
