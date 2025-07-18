@@ -1,70 +1,55 @@
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import styles from '../../styles/Outfit.module.css';
 import { useTranslation } from '../../hooks/useTranslation';
+import { incrementOutfitViews, incrementOutfitClicks, getOutfitById } from '../../lib/firestore';
+import { getOutfitById as getMockOutfitById } from '../../mock/data';
+import styles from '../../styles/Outfit.module.css';
 
 const OutfitDetail = () => {
   const router = useRouter();
   const { id } = router.query;
   const { t } = useTranslation();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [outfit, setOutfit] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-
-  const outfit = {
-    id: id,
-    name: 'Casual Denim Look',
-    description: 'Perfect for everyday wear with a relaxed yet stylish vibe',
-    rating: 4.8,
-    reviews: 127,
-    modelSpecs: {
-      height: '170cm',
-      weight: '55kg',
-      chest: '86cm',
-      waist: '65cm',
-      hips: '90cm',
-      size: 'Size M'
-    },
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    colors: [
-      { name: 'default', label: 'Original', color: '#4169E1' },
-      { name: 'black', label: 'Black', color: '#000000' },
-      { name: 'white', label: 'White', color: '#FFFFFF' }
-    ],
-    items: [
-      { 
-        id: 'jacket-123',
-        name: 'Denim Jacket', 
-        brand: 'Urban Style', 
-        price: '$45',
-        shopeeLink: 'https://shopee.vn/jacket-123',
-        tiktokLink: 'https://shop.tiktok.com/jacket-123'
-      },
-      { 
-        id: 'tshirt-456',
-        name: 'White T-Shirt', 
-        brand: 'Basic Tee', 
-        price: '$15',
-        shopeeLink: 'https://shopee.vn/tshirt-456',
-        tiktokLink: 'https://shop.tiktok.com/tshirt-456'
-      },
-      { 
-        id: 'jeans-789',
-        name: 'Blue Jeans', 
-        brand: 'Comfort Fit', 
-        price: '$29',
-        shopeeLink: 'https://shopee.vn/jeans-789',
-        tiktokLink: 'https://shop.tiktok.com/jeans-789'
+  useEffect(() => {
+    const fetchOutfit = async () => {
+      setLoading(true);
+      try {
+        const outfitData = await getOutfitById(id as string);
+        if (outfitData) {
+          setOutfit(outfitData);
+        } else {
+          // If no data from Firestore, fallback to mock data
+          const mockOutfit = getMockOutfitById(id as string);
+          setOutfit(mockOutfit);
+        }
+      } catch (error) {
+        console.error("Error fetching from Firestore:", error);
+        // Fallback to mock data in case of error
+        const mockOutfit = getMockOutfitById(id as string);
+        setOutfit(mockOutfit);
+      } finally {
+        setLoading(false);
       }
-    ],
-    tags: ['casual', 'comfortable', 'versatile'],
-    images: [
-        'https://example.com/image1.jpg',
-        'https://example.com/image2.jpg',
-        'https://example.com/image3.jpg'
-    ]
-  };
+    };
+
+    if (id) {
+      fetchOutfit();
+    }
+  }, [id]);
+
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!outfit) {
+    return <div>Outfit not found</div>;
+  }
 
   return (
     <div className={styles.container}>
