@@ -89,43 +89,47 @@ const OutfitDetail = () => {
 
           <div className={styles.detailsSection}>
             <div className={styles.outfitInfo}>
-              <h1 className={styles.outfitTitle}>{outfit.name}</h1>
-              <div className={styles.rating}>
-                <span className={styles.stars}>⭐⭐⭐⭐⭐</span>
-                <span className={styles.ratingText}>
-                  {outfit.rating} ({outfit.reviews} reviews)
-                </span>
-              </div>
+              <h1 className={styles.outfitTitle}>{outfit.name || outfit.title}</h1>
+              {outfit.rating && outfit.reviews && (
+                <div className={styles.rating}>
+                  <span className={styles.stars}>⭐⭐⭐⭐⭐</span>
+                  <span className={styles.ratingText}>
+                    {outfit.rating} ({outfit.reviews} reviews)
+                  </span>
+                </div>
+              )}
               <p className={styles.description}>{outfit.description}</p>
-              <div className={styles.modelSpecs}>
-                <h3>{t('outfit.modelSpecs')}</h3>
-                <div className={styles.specsGrid}>
-                  <div className={styles.specItem}>
-                    <span className={styles.specLabel}>{t('outfit.height')}:</span>
-                    <span className={styles.specValue}>{outfit.modelSpecs.height}</span>
-                  </div>
-                  <div className={styles.specItem}>
-                    <span className={styles.specLabel}>{t('outfit.weight')}:</span>
-                    <span className={styles.specValue}>{outfit.modelSpecs.weight}</span>
-                  </div>
-                  <div className={styles.specItem}>
-                    <span className={styles.specLabel}>Vòng ngực:</span>
-                    <span className={styles.specValue}>{outfit.modelSpecs.chest}</span>
-                  </div>
-                  <div className={styles.specItem}>
-                    <span className={styles.specLabel}>Vòng eo:</span>
-                    <span className={styles.specValue}>{outfit.modelSpecs.waist}</span>
-                  </div>
-                  <div className={styles.specItem}>
-                    <span className={styles.specLabel}>Vòng hông:</span>
-                    <span className={styles.specValue}>{outfit.modelSpecs.hips}</span>
-                  </div>
-                  <div className={styles.specItem}>
-                    <span className={styles.specLabel}>{t('outfit.size')}:</span>
-                    <span className={styles.specValue}>{outfit.modelSpecs.size}</span>
+              {outfit.modelSpecs && (
+                <div className={styles.modelSpecs}>
+                  <h3>{t('outfit.modelSpecs')}</h3>
+                  <div className={styles.specsGrid}>
+                    <div className={styles.specItem}>
+                      <span className={styles.specLabel}>{t('outfit.height')}:</span>
+                      <span className={styles.specValue}>{outfit.modelSpecs.height}</span>
+                    </div>
+                    <div className={styles.specItem}>
+                      <span className={styles.specLabel}>{t('outfit.weight')}:</span>
+                      <span className={styles.specValue}>{outfit.modelSpecs.weight}</span>
+                    </div>
+                    <div className={styles.specItem}>
+                      <span className={styles.specLabel}>Vòng ngực:</span>
+                      <span className={styles.specValue}>{outfit.modelSpecs.chest}</span>
+                    </div>
+                    <div className={styles.specItem}>
+                      <span className={styles.specLabel}>Vòng eo:</span>
+                      <span className={styles.specValue}>{outfit.modelSpecs.waist}</span>
+                    </div>
+                    <div className={styles.specItem}>
+                      <span className={styles.specLabel}>Vòng hông:</span>
+                      <span className={styles.specValue}>{outfit.modelSpecs.hips}</span>
+                    </div>
+                    <div className={styles.specItem}>
+                      <span className={styles.specLabel}>{t('outfit.size')}:</span>
+                      <span className={styles.specValue}>{outfit.modelSpecs.size}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className={styles.itemBreakdown}>

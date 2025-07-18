@@ -20,6 +20,7 @@ export interface MockOutfitItem {
 export interface MockOutfit {
   id: string;
   title: string;
+  name?: string; // Add name field for compatibility
   description: string;
   images: string[];
   items: MockOutfitItem[];
@@ -32,6 +33,16 @@ export interface MockOutfit {
   isTrending?: boolean;
   views?: number;
   clicks?: number;
+  rating?: number;
+  reviews?: number;
+  modelSpecs?: {
+    height: string;
+    weight: string;
+    chest: string;
+    waist: string;
+    hips: string;
+    size: string;
+  };
 }
 
 // Mock Items Data
@@ -436,6 +447,7 @@ export const outfits_mock: MockOutfit[] = [
   {
     id: '1',
     title: 'Urban Streetwear Vibe',
+    name: 'Urban Streetwear Vibe',
     description: 'Bold and edgy streetwear look perfect for city adventures',
     images: [
       'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
@@ -454,11 +466,22 @@ export const outfits_mock: MockOutfit[] = [
     isSponsored: false,
     isTrending: false,
     views: 234,
-    clicks: 45
+    clicks: 45,
+    rating: 4.8,
+    reviews: 156,
+    modelSpecs: {
+      height: '175cm',
+      weight: '65kg',
+      chest: '90cm',
+      waist: '75cm',
+      hips: '95cm',
+      size: 'M'
+    }
   },
   {
     id: '2',
     title: 'Vintage Romance',
+    name: 'Vintage Romance',
     description: 'Timeless vintage pieces with romantic feminine touches',
     images: [
       'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400',
@@ -477,11 +500,22 @@ export const outfits_mock: MockOutfit[] = [
     isSponsored: true,
     isTrending: false,
     views: 189,
-    clicks: 32
+    clicks: 32,
+    rating: 4.6,
+    reviews: 89,
+    modelSpecs: {
+      height: '168cm',
+      weight: '58kg',
+      chest: '85cm',
+      waist: '68cm',
+      hips: '92cm',
+      size: 'S'
+    }
   },
   {
     id: '3',
     title: 'Clean Girl Aesthetic',
+    name: 'Clean Girl Aesthetic',
     description: 'Minimalist and effortless clean girl style',
     images: [
       'https://images.unsplash.com/photo-1494790108755-2616c933e68c?w=400',
@@ -500,7 +534,17 @@ export const outfits_mock: MockOutfit[] = [
     isSponsored: false,
     isTrending: true,
     views: 156,
-    clicks: 28
+    clicks: 28,
+    rating: 4.7,
+    reviews: 124,
+    modelSpecs: {
+      height: '172cm',
+      weight: '62kg',
+      chest: '88cm',
+      waist: '72cm',
+      hips: '94cm',
+      size: 'M'
+    }
   },
   {
     id: '4',
