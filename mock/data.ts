@@ -1,3 +1,4 @@
+
 export interface MockOutfitItem {
   id: string;
   name: string;
@@ -676,8 +677,7 @@ export const outfits_mock: MockOutfit[] = [
       'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=400'
     ],
     items: [
-      items_mock```text
-.find(item => item.id === 'dress-001')!,
+      items_mock.find(item => item.id === 'dress-001')!,
       items_mock.find(item => item.id === 'cardigan-001')!,
       items_mock.find(item => item.id === 'sandals-001')!,
       items_mock.find(item => item.id === 'scarf-001')!
@@ -1020,15 +1020,23 @@ export const outfits_mock: MockOutfit[] = [
       items_mock.find(item => item.id === 'boots-001')!,
       items_mock.find(item => item.id === 'scarf-001')!
     ],
-    tags: ['artsy', 'creative', 'unique'],
-    style: 'Boho',
+    tags: ['japan', 'trend', 'unique'],
+    style: 'Japan',
     createdAt: new Date(Date.now() - 1900800000).toISOString(),
     createdBy: 'admin',
     isHot: true,
     isSponsored: false,
     isTrending: true,
     views: 267,
-    clicks: 58
+    clicks: 58,
+    modelSpecs: {
+      height: '160cm',
+      weight: '50kg',
+      chest: '80cm',
+      waist: '65cm',
+      hips: '88cm',
+      size: 'S'
+    }
   }
 ];
 
