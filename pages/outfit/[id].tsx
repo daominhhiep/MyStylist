@@ -135,6 +135,27 @@ const OutfitDetail = () => {
                 </div>
               )}
             </div>
+
+            {/* Thumbnail Gallery */}
+            {outfit.images && outfit.images.length > 1 && (
+              <div className={styles.thumbnailGallery}>
+                {outfit.images.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`${styles.thumbnail} ${
+                      index === currentImageIndex ? styles.activeThumbnail : ''
+                    }`}
+                  >
+                    <img 
+                      src={image} 
+                      alt={`${outfit.title || outfit.name} - Image ${index + 1}`}
+                      className={styles.thumbnailImage}
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className={styles.detailsSection}>
