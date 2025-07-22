@@ -330,3 +330,33 @@
     padding: 1rem;
   }
 }
+
+.itemForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.itemHeader h4 {
+  margin: 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.imageSelected {
+  color: #4CAF50;
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+  font-weight: 500;
+}

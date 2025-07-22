@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useAuth } from '../../components/AuthProvider';
 import { uploadOutfitImages } from '../../lib/storage';
 import { createOutfit, getOutfits, deleteOutfit, Outfit } from '../../lib/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../lib/firebase';
 import styles from '../../styles/Admin.module.css';
 
 const AdminDashboard = () => {
@@ -22,14 +24,14 @@ const AdminDashboard = () => {
     isTrending: false
   });
 
-  const [selectedImages, setSelectedImages] = useState<FileList | null>(null);
   const [items, setItems] = useState([{
     name: '',
     brand: '',
     price: '',
     category: 'tops',
     shopeeLink: '',
-    tiktokLink: ''
+    tiktokLink: '',
+    image: null as File | null
   }]);
 
   useEffect(() => {
@@ -49,10 +51,10 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setSelectedImages(e.target.files);
-    }
+  const handleItemImageChange = (index: number, file: File | null) => {
+    const updatedItems = [...items];
+    updatedItems[index] = {...updatedItems[index], image: file};
+    setItems(updatedItems);
   };
 
   const addItem = () => {
@@ -62,7 +64,8 @@ const AdminDashboard = () => {
       price: '',
       category: 'tops',
       shopeeLink: '',
-      tiktokLink: ''
+      tiktokLink: '',
+      image: null as File | null
     }]);
   };
 
@@ -84,15 +87,26 @@ const AdminDashboard = () => {
       return;
     }
 
-    if (!newOutfit.title || !newOutfit.description || !selectedImages || selectedImages.length === 0) {
-      alert('Please fill in all required fields and select at least one image');
+    if (!newOutfit.title || !newOutfit.description) {
+      alert('Please fill in title and description');
       return;
     }
 
-    // Validate items
-    const validItems = items.filter(item => item.name && item.brand && item.price);
+    // Validate items - each item must have name, brand, price, and image
+    const validItems = items.filter(item => 
+      item.name && item.brand && item.price && item.image
+    );
     if (validItems.length === 0) {
-      alert('Please add at least one complete item');
+      alert('Please add at least one complete item with all required fields and an image');
+      return;
+    }
+
+    // Check if all items have required fields
+    const incompleteItems = items.some(item => 
+      !item.name || !item.brand || !item.price || !item.image
+    );
+    if (incompleteItems) {
+      alert('All items must have name, brand, price, and image filled in');
       return;
     }
 
@@ -102,18 +116,42 @@ const AdminDashboard = () => {
       // Create temporary outfit ID for image upload
       const tempOutfitId = Date.now().toString();
 
-      // Upload images to Firebase Storage
-      const imageUrls = await uploadOutfitImages(selectedImages, tempOutfitId);
+      // Upload item images to Firebase Storage
+      const itemsWithImages = await Promise.all(
+        validItems.map(async (item, index) => {
+          if (item.image) {
+            const imagePath = `outfits/${tempOutfitId}/item_${index}_${Date.now()}`;
+            const imageRef = ref(storage, imagePath);
+            const snapshot = await uploadBytes(imageRef, item.image);
+            const imageUrl = await getDownloadURL(snapshot.ref);
+            
+            return {
+              id: `${tempOutfitId}-item-${index}`,
+              name: item.name,
+              brand: item.brand,
+              price: item.price,
+              category: item.category,
+              shopeeLink: item.shopeeLink,
+              tiktokLink: item.tiktokLink,
+              image: imageUrl
+            };
+          }
+          return null;
+        })
+      );
+
+      // Filter out null items
+      const finalItems = itemsWithImages.filter(item => item !== null);
+
+      // Create images array from item images for backward compatibility
+      const imageUrls = finalItems.map(item => item!.image);
 
       // Prepare outfit data
       const outfitData = {
         title: newOutfit.title,
         description: newOutfit.description,
         images: imageUrls,
-        items: validItems.map((item, index) => ({
-          id: `${tempOutfitId}-item-${index}`,
-          ...item
-        })),
+        items: finalItems,
         tags: newOutfit.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
         style: newOutfit.style,
         createdAt: new Date().toISOString(),
@@ -136,14 +174,14 @@ const AdminDashboard = () => {
         isSponsored: false,
         isTrending: false
       });
-      setSelectedImages(null);
       setItems([{
         name: '',
         brand: '',
         price: '',
         category: 'tops',
         shopeeLink: '',
-        tiktokLink: ''
+        tiktokLink: '',
+        image: null as File | null
       }]);
 
       // Reload outfits
@@ -258,56 +296,77 @@ const AdminDashboard = () => {
             </label>
           </div>
 
-          <div className={styles.imageUpload}>
-            <label htmlFor="images">Upload Images:</label>
-            <input
-              id="images"
-              type="file"
-              multiple
-              accept="image/*"
-              onChange={handleImageChange}
-              className={styles.input}
-            />
-            {selectedImages && (
-              <p>{selectedImages.length} image(s) selected</p>
-            )}
-          </div>
-
           <div className={styles.itemsSection}>
-            <h3>Outfit Items</h3>
+            <h3>Outfit Items (Each item requires an image)</h3>
             {items.map((item, index) => (
               <div key={index} className={styles.itemForm}>
+                <div className={styles.itemHeader}>
+                  <h4>Item {index + 1}</h4>
+                  {items.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeItem(index)}
+                      className={styles.removeButton}
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+                
                 <input
                   type="text"
-                  placeholder="Item Name"
+                  placeholder="Item Name *"
                   value={item.name}
                   onChange={(e) => updateItem(index, 'name', e.target.value)}
                   className={styles.input}
+                  required
                 />
                 <input
                   type="text"
-                  placeholder="Brand"
+                  placeholder="Brand *"
                   value={item.brand}
                   onChange={(e) => updateItem(index, 'brand', e.target.value)}
                   className={styles.input}
+                  required
                 />
                 <input
                   type="text"
-                  placeholder="Price"
+                  placeholder="Price *"
                   value={item.price}
                   onChange={(e) => updateItem(index, 'price', e.target.value)}
                   className={styles.input}
+                  required
                 />
                 <select
                   value={item.category}
                   onChange={(e) => updateItem(index, 'category', e.target.value)}
                   className={styles.select}
+                  required
                 >
                   <option value="tops">Tops</option>
                   <option value="bottoms">Bottoms</option>
                   <option value="dresses">Dresses</option>
                   <option value="accessories">Accessories</option>
                 </select>
+                
+                <div className={styles.imageUpload}>
+                  <label htmlFor={`item-image-${index}`}>Item Image *:</label>
+                  <input
+                    id={`item-image-${index}`}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] || null;
+                      handleItemImageChange(index, file);
+                    }}
+                    className={styles.input}
+                    required
+                  />
+                  {item.image && (
+                    <p className={styles.imageSelected}>✓ Image selected: {item.image.name}</p>
+                  )}
+                </div>
+                
                 <input
                   type="url"
                   placeholder="Shopee Link"
@@ -322,15 +381,6 @@ const AdminDashboard = () => {
                   onChange={(e) => updateItem(index, 'tiktokLink', e.target.value)}
                   className={styles.input}
                 />
-                {items.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removeItem(index)}
-                    className={styles.removeButton}
-                  >
-                    Remove
-                  </button>
-                )}
               </div>
             ))}
             <button

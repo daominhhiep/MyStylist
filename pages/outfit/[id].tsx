@@ -129,6 +129,15 @@ const OutfitDetail = () => {
           <div className={styles.itemsList}>
             {outfit.items && outfit.items.map((item, index) => (
               <div key={index} className={styles.itemRow}>
+                {item.image && (
+                  <div className={styles.itemImageContainer}>
+                    <img 
+                      src={item.image} 
+                      alt={item.name}
+                      className={styles.itemImage}
+                    />
+                  </div>
+                )}
                 <div className={styles.itemInfo}>
                   <h3 className={styles.itemName}>{item.name}</h3>
                   <p className={styles.itemDescription}>{item.description || item.brand}</p>

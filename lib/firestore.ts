@@ -23,6 +23,7 @@ export interface OutfitItem {
   shopeeLink?: string;
   tiktokLink?: string;
   category: string;
+  image?: string;
   sizes?: string[];
   colors?: { name: string; label: string; color: string }[];
   tags?: string[];

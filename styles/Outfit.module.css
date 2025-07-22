@@ -156,6 +156,20 @@
   gap: 1rem;
 }
 
+.itemImageContainer {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.itemImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .itemRow:last-child {
   border-bottom: none;
 }
