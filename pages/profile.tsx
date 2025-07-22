@@ -1,15 +1,12 @@
-
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { doc, updateDoc } from 'firebase/firestore';
-import Head from 'next/head';
-import Link from 'next/link';
 import { useAuth } from '../components/AuthProvider';
 import { db } from '../lib/firebase';
 import styles from '../styles/Auth.module.css';
 
 export default function Profile() {
-  const { user, userProfile, signOut, loading } = useAuth();
+  const {user, userProfile, signOut, loading} = useAuth();
   const router = useRouter();
   const [formData, setFormData] = useState({
     height: '',
@@ -39,7 +36,7 @@ export default function Profile() {
   }, [userProfile]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -74,23 +71,15 @@ export default function Profile() {
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Thông tin cá nhân - MyStylist</title>
-        <meta name="description" content="Quản lý thông tin cá nhân" />
-      </Head>
-
       <div className={styles.profileContainer}>
         <div className={styles.profileHeader}>
-          <Link href="/" className={styles.backButton}>
-            ← Về trang chủ
-          </Link>
           <h1 className={styles.profileTitle}>Thông tin cá nhân</h1>
           <p className={styles.profileSubtitle}>Cập nhật thông tin để có trải nghiệm tốt nhất với gợi ý AI</p>
         </div>
 
         <div className={styles.userInfo}>
-          <img 
-            src={user.photoURL || '/default-avatar.png'} 
+          <img
+            src={user.photoURL || '/default-avatar.png'}
             alt="Avatar"
             className={styles.userAvatar}
           />
@@ -98,7 +87,7 @@ export default function Profile() {
             <div className={styles.userName}>{user.displayName}</div>
             <div className={styles.userEmail}>{user.email}</div>
           </div>
-          <button 
+          <button
             onClick={signOut}
             className={styles.signOutButton}
           >
@@ -184,7 +173,7 @@ export default function Profile() {
             </div>
           </div>
 
-          <button 
+          <button
             onClick={handleSave}
             className={styles.saveButton}
             disabled={saving}

@@ -1,5 +1,4 @@
-
-import { 
+import {
   collection, 
   doc, 
   addDoc, 
@@ -20,14 +19,17 @@ export interface OutfitItem {
   id: string;
   name: string;
   brand: string;
-  price: string;
+  description?: string;
   shopeeLink?: string;
   tiktokLink?: string;
   category: string;
+  sizes?: string[];
+  colors?: { name: string; label: string; color: string }[];
+  tags?: string[];
 }
 
 export interface Outfit {
-  id?: string;
+  id: string;
   title: string;
   description: string;
   images: string[];
@@ -42,6 +44,11 @@ export interface Outfit {
   isTrending?: boolean;
   views?: number;
   clicks?: number;
+  modelSpecs?: {
+    height: string;
+    weight: string;
+    size: string;
+  };
 }
 
 // Outfit functions

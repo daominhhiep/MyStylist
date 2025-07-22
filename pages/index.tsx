@@ -3,19 +3,9 @@ import type {NextPage} from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
-import {LanguageSwitcher} from '../components/LanguageSwitcher';
-import { useAuth } from '../components/AuthProvider';
 import { useOutfits } from '../hooks/useOutfits';
-import Navbar from "../components/NavBar";
-import { incrementOutfitClicks } from '../lib/firestore';
 
 const Home: NextPage = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-
   const {
     outfits,
     loading,
@@ -23,21 +13,13 @@ const Home: NextPage = () => {
     loadMore,
   } = useOutfits();
 
-  const {user, signInWithGoogle, signOut, userProfile, loading: authLoading} = useAuth();
-
   return (
     <div className={styles.container}>
-      <Head>
-        <title>MyStylist - Phong Cách Thời Trang</title>
-        <meta name="description" content="Khám phá phong cách thời trang với AI"/>
-        <link rel="icon" href="/favicon.ico"/>
-      </Head>
-
       <main className={styles.main}>
         <div className={styles.hero}>
           <h1 className={styles.heroTitle}>Lookbook Thời Trang</h1>
           <p className={styles.heroQuote}>
-            "Thời trang không chỉ là quần áo – nó là cách bạn thể hiện chính mình."
+            `Thời trang không chỉ là quần áo – nó là cách bạn thể hiện chính mình.`
           </p>
         </div>
 
@@ -91,10 +73,6 @@ const Home: NextPage = () => {
           </div>
         )}
       </main>
-
-      <footer className={styles.footer}>
-        <p>© 2024 MyStylist</p>
-      </footer>
     </div>
   );
 };

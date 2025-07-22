@@ -13,24 +13,24 @@ export const useOutfits = () => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const loadOutfits = async (reset: boolean = false) => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const docToUse = reset ? null : lastDoc;
-      const { outfits: newOutfits, lastDoc: newLastDoc } = await getOutfits(12, docToUse || undefined);
-
-      if (reset) {
-        setOutfits(newOutfits);
-      } else {
-        setOutfits(prev => [...prev, ...newOutfits]);
-      }
-
-      setLastDoc(newLastDoc);
-      setHasMore(newOutfits.length === 12);
-      setUsingMockData(false);
-
-    } catch (error) {
+    // try {
+    //   setLoading(true);
+    //   setError(null);
+    //
+    //   const docToUse = reset ? null : lastDoc;
+    //   const { outfits: newOutfits, lastDoc: newLastDoc } = await getOutfits(12, docToUse || undefined);
+    //
+    //   if (reset) {
+    //     setOutfits(newOutfits);
+    //   } else {
+    //     setOutfits(prev => [...prev, ...newOutfits]);
+    //   }
+    //
+    //   setLastDoc(newLastDoc);
+    //   setHasMore(newOutfits.length === 12);
+    //   setUsingMockData(true); //test
+    //
+    // } catch (error) {
       console.error('Error loading outfits:', error);
 
       // Fallback to mock data
@@ -46,9 +46,9 @@ export const useOutfits = () => {
       }
 
       setError('Failed to load outfits from database, using sample data');
-    } finally {
-      setLoading(false);
-    }
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   const loadMore = async () => {

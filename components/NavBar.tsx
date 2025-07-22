@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
           </Link>
           <div className={styles.mobileOnlyActions}>
             <div className={styles.languageSection}>
-              <LanguageSwitcher />
+              {/*<LanguageSwitcher />*/}
             </div>
             {user ? (
               <Link
@@ -58,7 +58,7 @@ const Navbar: React.FC = () => {
           </div>
         </nav>
         <div className={styles.headerActions}>
-          <LanguageSwitcher />
+          {/*<LanguageSwitcher />*/}
           {user ? (
             <Link href="/profile" className={styles.profileButton}>
               <img

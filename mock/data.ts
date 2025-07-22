@@ -1,69 +1,19 @@
-
-export interface MockOutfitItem {
-  id: string;
-  name: string;
-  brand: string;
-  price: string;
-  originalPrice?: string;
-  shopeeLink?: string;
-  tiktokLink?: string;
-  category: string;
-  description?: string;
-  rating?: number;
-  reviews?: number;
-  sizes?: string[];
-  colors?: { name: string; label: string; color: string }[];
-  features?: string[];
-  tags?: string[];
-}
-
-export interface MockOutfit {
-  id: string;
-  title: string;
-  name?: string; // Add name field for compatibility
-  description: string;
-  images: string[];
-  items: MockOutfitItem[];
-  tags: string[];
-  style: string;
-  createdAt: string;
-  createdBy: string;
-  isHot?: boolean;
-  isSponsored?: boolean;
-  isTrending?: boolean;
-  views?: number;
-  clicks?: number;
-  rating?: number;
-  reviews?: number;
-  modelSpecs?: {
-    height: string;
-    weight: string;
-    chest: string;
-    waist: string;
-    hips: string;
-    size: string;
-  };
-}
-
 // Mock Items Data
-export const items_mock: MockOutfitItem[] = [
+import { Outfit, OutfitItem } from "../lib/firestore";
+
+export const items_mock: OutfitItem[] = [
   {
     id: 'hoodie-001',
     name: 'Oversized Hoodie',
     brand: 'UrbanStyle',
-    price: '$65',
-    originalPrice: '$85',
     category: 'tops',
     description: 'Comfortable oversized hoodie perfect for streetwear looks',
-    rating: 4.8,
-    reviews: 234,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
       { name: 'black', label: 'Black', color: '#000000' },
       { name: 'gray', label: 'Gray', color: '#808080' },
       { name: 'white', label: 'White', color: '#FFFFFF' }
     ],
-    shopeeLink: 'https://shopee.vn/hoodie-001',
     tiktokLink: 'https://shop.tiktok.com/hoodie-001',
     tags: ['streetwear', 'casual', 'oversized']
   },
@@ -71,12 +21,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'jeans-001',
     name: 'Distressed Jeans',
     brand: 'StreetDenim',
-    price: '$89',
-    originalPrice: '$120',
     category: 'bottoms',
     description: 'Trendy distressed jeans with vintage wash',
-    rating: 4.6,
-    reviews: 156,
     sizes: ['26', '28', '30', '32', '34'],
     colors: [
       { name: 'blue', label: 'Light Blue', color: '#4169E1' },
@@ -90,12 +36,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'dress-001',
     name: 'Floral Midi Dress',
     brand: 'VintageRose',
-    price: '$120',
-    originalPrice: '$160',
     category: 'dresses',
     description: 'Elegant floral midi dress with vintage-inspired design',
-    rating: 4.9,
-    reviews: 89,
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
       { name: 'floral', label: 'Pink Floral', color: '#FFB6C1' },
@@ -109,12 +51,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'jacket-001',
     name: 'Denim Jacket',
     brand: 'Urban Style',
-    price: '$45',
-    originalPrice: '$65',
     category: 'outerwear',
     description: 'Classic denim jacket with vintage wash',
-    rating: 4.6,
-    reviews: 89,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
       { name: 'blue', label: 'Light Blue', color: '#4169E1' },
@@ -129,12 +67,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'tshirt-001',
     name: 'Basic White Tee',
     brand: 'BasicWear',
-    price: '$15',
-    originalPrice: '$25',
     category: 'tops',
     description: 'Essential white t-shirt for any wardrobe',
-    rating: 4.7,
-    reviews: 312,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
       { name: 'white', label: 'White', color: '#FFFFFF' },
@@ -149,12 +83,9 @@ export const items_mock: MockOutfitItem[] = [
     id: 'sneakers-001',
     name: 'White Sneakers',
     brand: 'ComfortStep',
-    price: '$75',
-    originalPrice: '$95',
+
     category: 'shoes',
     description: 'Classic white sneakers for everyday wear',
-    rating: 4.8,
-    reviews: 201,
     sizes: ['36', '37', '38', '39', '40', '41', '42'],
     colors: [
       { name: 'white', label: 'White', color: '#FFFFFF' },
@@ -168,12 +99,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'blouse-001',
     name: 'Silk Blouse',
     brand: 'ElegantStyle',
-    price: '$95',
-    originalPrice: '$125',
     category: 'tops',
     description: 'Luxurious silk blouse for professional looks',
-    rating: 4.9,
-    reviews: 67,
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
       { name: 'ivory', label: 'Ivory', color: '#FFFFF0' },
@@ -188,12 +115,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'skirt-001',
     name: 'Pleated Mini Skirt',
     brand: 'TrendyWear',
-    price: '$35',
-    originalPrice: '$50',
     category: 'bottoms',
     description: 'Cute pleated mini skirt perfect for casual outings',
-    rating: 4.5,
-    reviews: 143,
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
       { name: 'black', label: 'Black', color: '#000000' },
@@ -208,12 +131,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'coat-001',
     name: 'Long Wool Coat',
     brand: 'WinterWarm',
-    price: '$180',
-    originalPrice: '$220',
     category: 'outerwear',
     description: 'Elegant long wool coat for cold weather',
-    rating: 4.8,
-    reviews: 92,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
       { name: 'camel', label: 'Camel', color: '#C19A6B' },
@@ -228,12 +147,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'pants-001',
     name: 'Wide Leg Trousers',
     brand: 'ModernFit',
-    price: '$68',
-    originalPrice: '$85',
     category: 'bottoms',
     description: 'Comfortable wide leg trousers for modern style',
-    rating: 4.7,
-    reviews: 178,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
       { name: 'black', label: 'Black', color: '#000000' },
@@ -248,12 +163,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'cardigan-001',
     name: 'Knit Cardigan',
     brand: 'CozyKnits',
-    price: '$55',
-    originalPrice: '$75',
     category: 'tops',
     description: 'Soft knit cardigan perfect for layering',
-    rating: 4.6,
-    reviews: 134,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
       { name: 'cream', label: 'Cream', color: '#F5F5DC' },
@@ -268,12 +179,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'boots-001',
     name: 'Ankle Boots',
     brand: 'BootCraft',
-    price: '$120',
-    originalPrice: '$150',
     category: 'shoes',
     description: 'Stylish ankle boots with block heel',
-    rating: 4.8,
-    reviews: 98,
     sizes: ['36', '37', '38', '39', '40', '41'],
     colors: [
       { name: 'black', label: 'Black', color: '#000000' },
@@ -288,12 +195,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'bag-001',
     name: 'Leather Handbag',
     brand: 'LuxeBags',
-    price: '$145',
-    originalPrice: '$180',
     category: 'accessories',
     description: 'Premium leather handbag with classic design',
-    rating: 4.9,
-    reviews: 76,
     colors: [
       { name: 'black', label: 'Black', color: '#000000' },
       { name: 'brown', label: 'Cognac', color: '#8B4513' },
@@ -307,12 +210,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'sweater-001',
     name: 'Turtleneck Sweater',
     brand: 'WarmWear',
-    price: '$65',
-    originalPrice: '$85',
     category: 'tops',
     description: 'Classic turtleneck sweater in soft wool blend',
-    rating: 4.7,
-    reviews: 156,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
       { name: 'black', label: 'Black', color: '#000000' },
@@ -327,12 +226,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'jumpsuit-001',
     name: 'Denim Jumpsuit',
     brand: 'RetroStyle',
-    price: '$85',
-    originalPrice: '$110',
     category: 'dresses',
     description: 'Vintage-inspired denim jumpsuit with modern fit',
-    rating: 4.6,
-    reviews: 89,
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
       { name: 'blue', label: 'Classic Blue', color: '#4169E1' },
@@ -346,12 +241,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'blazer-001',
     name: 'Tailored Blazer',
     brand: 'BusinessChic',
-    price: '$125',
-    originalPrice: '$165',
     category: 'outerwear',
     description: 'Sharp tailored blazer for professional looks',
-    rating: 4.8,
-    reviews: 112,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
       { name: 'black', label: 'Black', color: '#000000' },
@@ -366,12 +257,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'sandals-001',
     name: 'Strappy Sandals',
     brand: 'SummerStep',
-    price: '$45',
-    originalPrice: '$65',
     category: 'shoes',
     description: 'Elegant strappy sandals perfect for summer',
-    rating: 4.5,
-    reviews: 167,
     sizes: ['36', '37', '38', '39', '40', '41'],
     colors: [
       { name: 'nude', label: 'Nude', color: '#F5DEB3' },
@@ -386,12 +273,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'shorts-001',
     name: 'High Waist Shorts',
     brand: 'SummerVibes',
-    price: '$35',
-    originalPrice: '$50',
     category: 'bottoms',
     description: 'Trendy high waist shorts for summer styling',
-    rating: 4.4,
-    reviews: 203,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
       { name: 'denim', label: 'Light Denim', color: '#6495ED' },
@@ -406,12 +289,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'watch-001',
     name: 'Minimalist Watch',
     brand: 'TimeElegant',
-    price: '$85',
-    originalPrice: '$120',
     category: 'accessories',
     description: 'Sleek minimalist watch with leather strap',
-    rating: 4.7,
-    reviews: 143,
     colors: [
       { name: 'gold', label: 'Rose Gold', color: '#E8B4B8' },
       { name: 'silver', label: 'Silver', color: '#C0C0C0' },
@@ -425,12 +304,8 @@ export const items_mock: MockOutfitItem[] = [
     id: 'scarf-001',
     name: 'Silk Scarf',
     brand: 'LuxeAccessories',
-    price: '$35',
-    originalPrice: '$55',
     category: 'accessories',
     description: 'Elegant silk scarf with floral pattern',
-    rating: 4.6,
-    reviews: 89,
     colors: [
       { name: 'floral', label: 'Pink Floral', color: '#FFB6C1' },
       { name: 'blue', label: 'Blue Pattern', color: '#87CEEB' },
@@ -443,20 +318,17 @@ export const items_mock: MockOutfitItem[] = [
 ];
 
 // Mock Outfits Data
-export const outfits_mock: MockOutfit[] = [
+export const outfits_mock: Outfit[] = [
   {
     id: '1',
     title: 'Urban Streetwear Vibe',
-    name: 'Urban Streetwear Vibe',
     description: 'Bold and edgy streetwear look perfect for city adventures',
     images: [
       'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
-      'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400'
     ],
     items: [
       items_mock.find(item => item.id === 'hoodie-001')!,
       items_mock.find(item => item.id === 'jeans-001')!,
-      items_mock.find(item => item.id === 'sneakers-001')!
     ],
     tags: ['streetwear', 'urban', 'casual'],
     style: 'Streetwear',
@@ -467,26 +339,18 @@ export const outfits_mock: MockOutfit[] = [
     isTrending: false,
     views: 234,
     clicks: 45,
-    rating: 4.8,
-    reviews: 156,
     modelSpecs: {
       height: '175cm',
       weight: '65kg',
-      chest: '90cm',
-      waist: '75cm',
-      hips: '95cm',
       size: 'M'
     }
   },
   {
     id: '2',
     title: 'Vintage Romance',
-    name: 'Vintage Romance',
     description: 'Timeless vintage pieces with romantic feminine touches',
     images: [
       'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1583743814966-8936f37f147a?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1494790108755-2616c27ce725?w=400&h=600&fit=crop'
     ],
     items: [
       items_mock.find(item => item.id === 'dress-001')!,
@@ -502,21 +366,15 @@ export const outfits_mock: MockOutfit[] = [
     isTrending: false,
     views: 189,
     clicks: 32,
-    rating: 4.6,
-    reviews: 89,
     modelSpecs: {
       height: '168cm',
       weight: '58kg',
-      chest: '85cm',
-      waist: '68cm',
-      hips: '92cm',
       size: 'S'
     }
   },
   {
     id: '3',
     title: 'Clean Girl Aesthetic',
-    name: 'Clean Girl Aesthetic',
     description: 'Minimalist and effortless clean girl style',
     images: [
       'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&h=600&fit=crop',
@@ -537,14 +395,9 @@ export const outfits_mock: MockOutfit[] = [
     isTrending: true,
     views: 156,
     clicks: 28,
-    rating: 4.7,
-    reviews: 124,
     modelSpecs: {
       height: '172cm',
       weight: '62kg',
-      chest: '88cm',
-      waist: '72cm',
-      hips: '94cm',
       size: 'M'
     }
   },
@@ -1032,20 +885,17 @@ export const outfits_mock: MockOutfit[] = [
     modelSpecs: {
       height: '160cm',
       weight: '50kg',
-      chest: '80cm',
-      waist: '65cm',
-      hips: '88cm',
       size: 'S'
     }
   }
 ];
 
 // Helper function to get outfit by ID
-export const getOutfitById = (id: string): MockOutfit | undefined => {
+export const getOutfitById = (id: string): Outfit | undefined => {
   return outfits_mock.find(outfit => outfit.id === id);
 };
 
 // Helper function to get outfits by style
-export const getOutfitsByStyle = (style: string): MockOutfit[] => {
+export const getOutfitsByStyle = (style: string): Outfit[] => {
   return outfits_mock.filter(outfit => outfit.style.toLowerCase() === style.toLowerCase());
 };
