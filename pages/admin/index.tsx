@@ -30,10 +30,10 @@ const AdminDashboard = () => {
   const [items, setItems] = useState([{
     name: '',
     brand: '',
-    price: '',
     category: 'tops',
     shopeeLink: '',
     tiktokLink: '',
+    embedTiktokLink: '',
     image: null as File | null
   }]);
 
@@ -80,10 +80,10 @@ const AdminDashboard = () => {
     const outfitItems = outfit.items.map(item => ({
       name: item.name,
       brand: item.brand,
-      price: '', // Add price if available in your data
       category: item.category,
       shopeeLink: item.shopeeLink || '',
       tiktokLink: item.tiktokLink || '',
+      embedTiktokLink: item.embedTiktokLink || '',
       image: null as File | null,
       existingImage: item.image // Keep reference to existing image
     }));
@@ -105,10 +105,10 @@ const AdminDashboard = () => {
     setItems([{
       name: '',
       brand: '',
-      price: '',
       category: 'tops',
       shopeeLink: '',
       tiktokLink: '',
+      embedTiktokLink: '',
       image: null as File | null
     }]);
     setOutfitImages([]);
@@ -118,10 +118,10 @@ const AdminDashboard = () => {
     setItems([...items, {
       name: '',
       brand: '',
-      price: '',
       category: 'tops',
       shopeeLink: '',
       tiktokLink: '',
+      embedTiktokLink: '',
       image: null as File | null
     }]);
   };
@@ -208,6 +208,7 @@ const AdminDashboard = () => {
             category: item.category,
             shopeeLink: item.shopeeLink,
             tiktokLink: item.tiktokLink,
+            embedTiktokLink: item.embedTiktokLink,
             image: imageUrl
           };
         })
@@ -454,14 +455,6 @@ const AdminDashboard = () => {
                   className={styles.input}
                   required
                 />
-                <input
-                  type="text"
-                  placeholder="Price *"
-                  value={item.price}
-                  onChange={(e) => updateItem(index, 'price', e.target.value)}
-                  className={styles.input}
-                  required
-                />
                 <select
                   value={item.category}
                   onChange={(e) => updateItem(index, 'category', e.target.value)}
@@ -521,6 +514,13 @@ const AdminDashboard = () => {
                   placeholder="TikTok Shop Link"
                   value={item.tiktokLink}
                   onChange={(e) => updateItem(index, 'tiktokLink', e.target.value)}
+                  className={styles.input}
+                />
+                <input
+                  type="url"
+                  placeholder="TikTok Embed Link (for video display)"
+                  value={item.embedTiktokLink}
+                  onChange={(e) => updateItem(index, 'embedTiktokLink', e.target.value)}
                   className={styles.input}
                 />
               </div>

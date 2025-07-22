@@ -166,6 +166,19 @@ const OutfitDetail = () => {
                     </a>
                   )}
                 </div>
+                {item.embedTiktokLink && (
+                  <div className={styles.tiktokEmbed}>
+                    <iframe
+                      src={item.embedTiktokLink}
+                      width="325"
+                      height="580"
+                      frameBorder="0"
+                      allowFullScreen
+                      title="TikTok Video"
+                      className={styles.tiktokVideo}
+                    />
+                  </div>
+                )}
               </div>
             ))}
           </div>

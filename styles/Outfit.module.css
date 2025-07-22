@@ -365,13 +365,28 @@
   color: #FFFFFF;
   border: none;
   padding: 1rem 2rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.3s ease;
   width: 100%;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 2rem;
+  transition: all 0.3s ease;
+}
+
+.tiktokEmbed {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+}
+
+.tiktokVideo {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
 .shareButton:hover {
