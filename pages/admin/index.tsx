@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useAuth } from '../../components/AuthProvider';
 import { uploadOutfitImages } from '../../lib/storage';
-import { createOutfit, getOutfits, deleteOutfit, Outfit } from '../../lib/firestore';
+import { createOutfit, getOutfits, deleteOutfit, updateOutfit, Outfit } from '../../lib/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../lib/firebase';
 import styles from '../../styles/Admin.module.css';
@@ -23,6 +23,9 @@ const AdminDashboard = () => {
     isSponsored: false,
     isTrending: false
   });
+
+  const [editingOutfit, setEditingOutfit] = useState<Outfit | null>(null);
+  const [outfitImages, setOutfitImages] = useState<File[]>([]);
 
   const [items, setItems] = useState([{
     name: '',
@@ -55,6 +58,60 @@ const AdminDashboard = () => {
     const updatedItems = [...items];
     updatedItems[index] = {...updatedItems[index], image: file};
     setItems(updatedItems);
+  };
+
+  const handleOutfitImagesChange = (files: File[]) => {
+    setOutfitImages(files);
+  };
+
+  const handleEditOutfit = (outfit: Outfit) => {
+    setEditingOutfit(outfit);
+    setNewOutfit({
+      title: outfit.title,
+      description: outfit.description,
+      style: outfit.style,
+      tags: outfit.tags.join(', '),
+      isHot: outfit.isHot || false,
+      isSponsored: outfit.isSponsored || false,
+      isTrending: outfit.isTrending || false
+    });
+    
+    // Set items with existing data
+    const outfitItems = outfit.items.map(item => ({
+      name: item.name,
+      brand: item.brand,
+      price: '', // Add price if available in your data
+      category: item.category,
+      shopeeLink: item.shopeeLink || '',
+      tiktokLink: item.tiktokLink || '',
+      image: null as File | null,
+      existingImage: item.image // Keep reference to existing image
+    }));
+    setItems(outfitItems);
+    setOutfitImages([]);
+  };
+
+  const cancelEdit = () => {
+    setEditingOutfit(null);
+    setNewOutfit({
+      title: '',
+      description: '',
+      style: 'Streetwear',
+      tags: '',
+      isHot: false,
+      isSponsored: false,
+      isTrending: false
+    });
+    setItems([{
+      name: '',
+      brand: '',
+      price: '',
+      category: 'tops',
+      shopeeLink: '',
+      tiktokLink: '',
+      image: null as File | null
+    }]);
+    setOutfitImages([]);
   };
 
   const addItem = () => {
@@ -92,9 +149,9 @@ const AdminDashboard = () => {
       return;
     }
 
-    // Validate items - each item must have name, brand, price, and image
+    // For editing, allow items without new images if they have existing images
     const validItems = items.filter(item => 
-      item.name && item.brand && item.price && item.image
+      item.name && item.brand && (item.image || (item as any).existingImage)
     );
     if (validItems.length === 0) {
       alert('Please add at least one complete item with all required fields and an image');
@@ -103,58 +160,74 @@ const AdminDashboard = () => {
 
     // Check if all items have required fields
     const incompleteItems = items.some(item => 
-      !item.name || !item.brand || !item.price || !item.image
+      !item.name || !item.brand || (!item.image && !(item as any).existingImage)
     );
     if (incompleteItems) {
-      alert('All items must have name, brand, price, and image filled in');
+      alert('All items must have name, brand, and image filled in');
       return;
     }
 
     try {
       setUploading(true);
 
-      // Create temporary outfit ID for image upload
-      const tempOutfitId = Date.now().toString();
+      // Use existing outfit ID for editing, or create new for creating
+      const outfitId = editingOutfit?.id || Date.now().toString();
+
+      // Upload new outfit images if provided
+      let outfitImageUrls: string[] = [];
+      if (outfitImages.length > 0) {
+        outfitImageUrls = await Promise.all(
+          outfitImages.map(async (image, index) => {
+            const imagePath = `outfits/${outfitId}/outfit_${index}_${Date.now()}`;
+            const imageRef = ref(storage, imagePath);
+            const snapshot = await uploadBytes(imageRef, image);
+            return await getDownloadURL(snapshot.ref);
+          })
+        );
+      } else if (editingOutfit) {
+        // Keep existing outfit images if no new ones provided
+        outfitImageUrls = editingOutfit.images || [];
+      }
 
       // Upload item images to Firebase Storage
       const itemsWithImages = await Promise.all(
         validItems.map(async (item, index) => {
+          let imageUrl = (item as any).existingImage || '';
+          
           if (item.image) {
-            const imagePath = `outfits/${tempOutfitId}/item_${index}_${Date.now()}`;
+            const imagePath = `outfits/${outfitId}/item_${index}_${Date.now()}`;
             const imageRef = ref(storage, imagePath);
             const snapshot = await uploadBytes(imageRef, item.image);
-            const imageUrl = await getDownloadURL(snapshot.ref);
-            
-            return {
-              id: `${tempOutfitId}-item-${index}`,
-              name: item.name,
-              brand: item.brand,
-              price: item.price,
-              category: item.category,
-              shopeeLink: item.shopeeLink,
-              tiktokLink: item.tiktokLink,
-              image: imageUrl
-            };
+            imageUrl = await getDownloadURL(snapshot.ref);
           }
-          return null;
+          
+          return {
+            id: editingOutfit ? editingOutfit.items[index]?.id || `${outfitId}-item-${index}` : `${outfitId}-item-${index}`,
+            name: item.name,
+            brand: item.brand,
+            category: item.category,
+            shopeeLink: item.shopeeLink,
+            tiktokLink: item.tiktokLink,
+            image: imageUrl
+          };
         })
       );
 
       // Filter out null items
       const finalItems = itemsWithImages.filter(item => item !== null);
 
-      // Create images array from item images for backward compatibility
-      const imageUrls = finalItems.map(item => item!.image);
+      // Create images array combining outfit images and item images
+      const allImageUrls = [...outfitImageUrls, ...finalItems.map(item => item!.image)].filter(url => url);
 
       // Prepare outfit data
       const outfitData = {
         title: newOutfit.title,
         description: newOutfit.description,
-        images: imageUrls,
+        images: allImageUrls,
         items: finalItems,
         tags: newOutfit.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
         style: newOutfit.style,
-        createdAt: new Date().toISOString(),
+        createdAt: editingOutfit?.createdAt || new Date().toISOString(),
         createdBy: user.uid,
         isHot: newOutfit.isHot,
         isSponsored: newOutfit.isSponsored,
@@ -162,31 +235,18 @@ const AdminDashboard = () => {
       };
 
       // Save to Firestore
-      await createOutfit(outfitData);
+      if (editingOutfit) {
+        await updateOutfit(editingOutfit.id!, outfitData);
+      } else {
+        await createOutfit(outfitData);
+      }
 
       // Reset form
-      setNewOutfit({
-        title: '',
-        description: '',
-        style: 'Streetwear',
-        tags: '',
-        isHot: false,
-        isSponsored: false,
-        isTrending: false
-      });
-      setItems([{
-        name: '',
-        brand: '',
-        price: '',
-        category: 'tops',
-        shopeeLink: '',
-        tiktokLink: '',
-        image: null as File | null
-      }]);
+      cancelEdit();
 
       // Reload outfits
       await loadOutfits();
-      alert('Outfit created successfully!');
+      alert(editingOutfit ? 'Outfit updated successfully!' : 'Outfit created successfully!');
 
     } catch (error) {
       console.error('Error creating outfit:', error);
@@ -230,7 +290,15 @@ const AdminDashboard = () => {
   return (
     <main className={styles.main}>
       <section className={styles.uploadSection}>
-        <h2>Create New Outfit</h2>
+        <h2>{editingOutfit ? 'Edit Outfit' : 'Create New Outfit'}</h2>
+        {editingOutfit && (
+          <button
+            onClick={cancelEdit}
+            className={styles.cancelButton}
+          >
+            Cancel Edit
+          </button>
+        )}
         <div className={styles.form}>
           <input
             type="text"
@@ -294,6 +362,63 @@ const AdminDashboard = () => {
               />
               📈 Trending
             </label>
+          </div>
+
+          <div className={styles.outfitImagesSection}>
+            <h3>Outfit Images (Optional - for main gallery)</h3>
+            <div className={styles.imageUpload}>
+              <label htmlFor="outfit-images">Upload Outfit Images:</label>
+              <input
+                id="outfit-images"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) => {
+                  const files = Array.from(e.target.files || []);
+                  handleOutfitImagesChange(files);
+                }}
+                className={styles.input}
+              />
+              {outfitImages.length > 0 && (
+                <div className={styles.imagePreview}>
+                  {outfitImages.map((image, index) => (
+                    <div key={index} className={styles.previewImage}>
+                      <img 
+                        src={URL.createObjectURL(image)} 
+                        alt={`Preview ${index + 1}`}
+                        className={styles.previewImg}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newImages = outfitImages.filter((_, i) => i !== index);
+                          setOutfitImages(newImages);
+                        }}
+                        className={styles.removeImageBtn}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            {editingOutfit && editingOutfit.images && editingOutfit.images.length > 0 && (
+              <div className={styles.existingImages}>
+                <h4>Current Outfit Images:</h4>
+                <div className={styles.imagePreview}>
+                  {editingOutfit.images.map((image, index) => (
+                    <div key={index} className={styles.previewImage}>
+                      <img 
+                        src={image} 
+                        alt={`Current ${index + 1}`}
+                        className={styles.previewImg}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className={styles.itemsSection}>
@@ -360,10 +485,27 @@ const AdminDashboard = () => {
                       handleItemImageChange(index, file);
                     }}
                     className={styles.input}
-                    required
+                    required={!(item as any).existingImage}
                   />
                   {item.image && (
-                    <p className={styles.imageSelected}>✓ Image selected: {item.image.name}</p>
+                    <div className={styles.newImagePreview}>
+                      <p className={styles.imageSelected}>✓ New image selected: {item.image.name}</p>
+                      <img 
+                        src={URL.createObjectURL(item.image)} 
+                        alt="New item preview"
+                        className={styles.itemPreviewImg}
+                      />
+                    </div>
+                  )}
+                  {!item.image && (item as any).existingImage && (
+                    <div className={styles.existingImagePreview}>
+                      <p className={styles.imageSelected}>✓ Current image:</p>
+                      <img 
+                        src={(item as any).existingImage} 
+                        alt="Current item"
+                        className={styles.itemPreviewImg}
+                      />
+                    </div>
                   )}
                 </div>
                 
@@ -397,7 +539,7 @@ const AdminDashboard = () => {
             className={styles.addButton}
             disabled={uploading}
           >
-            {uploading ? 'Creating...' : 'Create Outfit'}
+            {uploading ? (editingOutfit ? 'Updating...' : 'Creating...') : (editingOutfit ? 'Update Outfit' : 'Create Outfit')}
           </button>
         </div>
       </section>
@@ -438,6 +580,12 @@ const AdminDashboard = () => {
                       View Outfit
                     </button>
                   </Link>
+                  <button
+                    onClick={() => handleEditOutfit(outfit)}
+                    className={styles.editButton}
+                  >
+                    Edit
+                  </button>
                   <button
                     onClick={() => handleDeleteOutfit(outfit.id!)}
                     className={styles.deleteButton}
